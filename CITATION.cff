@@ -3,6 +3,7 @@ message: "If you use this code or these results, please cite the manuscript in p
 title: "Detection-Limited Eigenvalue Learning for Hybrid Quantum Linear System Solvers: code and results"
 type: software
 license: MIT
+repository-code: "https://github.com/deeptell-inc/hhlx-reproduce"
 authors:
   - family-names: Wakaura
     given-names: Hikaru

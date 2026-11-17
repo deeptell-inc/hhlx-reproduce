@@ -8,6 +8,7 @@
 \usepackage{booktabs}
 \usepackage{textcomp}
 \usepackage[hidelinks]{hyperref}
+\usepackage{url}
 \newcommand{\lmin}{\lambda_{\min}}
 \newcommand{\lmax}{\lambda_{\max}}
 \begin{document}
@@ -657,7 +658,7 @@ Several limitations should be stated.
 \emph{Spectral correction.} With $p_0=\sum_\ell c_\ell T_{2\ell+1}$ and residuals $r_k=\lmin-\lambda_kp_0(\lambda_k)$ at the $K$ learned eigenvalues, solve $G\alpha=r$ with $G_{ik}=\lambda_i\lambda_k\sum_\ell T_{2\ell+1}(\lambda_i)T_{2\ell+1}(\lambda_k)$ and set $\Delta c_\ell=\sum_k\alpha_k\lambda_kT_{2\ell+1}(\lambda_k)$ \cite{Suresh2026}; the base polynomial here is the bounded odd interval solution of the linear program.
 
 \section*{Code and data availability}
-The stage scripts, the result files and the scripts that regenerate every table of this paper and check a hand-written list of the numbers quoted in the text against the result files, together with SHA-256 manifests of code and results, are kept in a version-controlled repository and are available from the authors on reasonable request.
+The stage scripts, the result files and the scripts that regenerate every table of this paper and check a hand-written list of the numbers quoted in the text against the result files, together with SHA-256 manifests of code and results, are available at \url{https://github.com/deeptell-inc/hhlx-reproduce}.
 
 \bibliographystyle{IEEEtran}
 \bibliography{refs}
