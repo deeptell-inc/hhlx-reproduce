@@ -1,0 +1,206 @@
+{
+ "P3 Poisson N=8": {
+  "C_true": 2.7186291819268886,
+  "E_true": 0.07364523836723415,
+  "L_true": [
+   -1.5922463712944084,
+   0.0
+  ],
+  "kappa": 32.16343747752636,
+  "T2=inf, shots=10000, n_c=5": {
+   "spectral: rel err compliance": 0.012429626173089237,
+   "spectral: rel err energy": 0.027672206957427982,
+   "spectral: rel err functional <v|x>": 0.09173465391381193,
+   "fourier: rel err functional <v|x>": 5.8438543130094915,
+   "fourier: median max evolution time": 639.9837787991213
+  },
+  "T2=inf, shots=40000, n_c=5": {
+   "spectral: rel err compliance": 0.015115894960817965,
+   "spectral: rel err energy": 0.026538168879161467,
+   "spectral: rel err functional <v|x>": 0.04349163622938629,
+   "fourier: rel err functional <v|x>": 1.6062709840154907,
+   "fourier: median max evolution time": 791.0973802972651
+  },
+  "T2=inf, shots=160000, n_c=5": {
+   "spectral: rel err compliance": 0.011053622420601084,
+   "spectral: rel err energy": 0.017733324179639704,
+   "spectral: rel err functional <v|x>": 0.021818832113241766,
+   "fourier: rel err functional <v|x>": 1.5651349599902653,
+   "fourier: median max evolution time": 747.3143208423268
+  },
+  "T2=300.0, shots=10000, n_c=5": {
+   "spectral: rel err compliance": 0.07923824832008255,
+   "spectral: rel err energy": 0.13120615260344515,
+   "spectral: rel err functional <v|x>": 0.11748078482391955,
+   "fourier: rel err functional <v|x>": 9.233344943474481,
+   "fourier: median max evolution time": 651.8217282216589
+  },
+  "T2=300.0, shots=40000, n_c=5": {
+   "spectral: rel err compliance": 0.03731794186251185,
+   "spectral: rel err energy": 0.05768463725002219,
+   "spectral: rel err functional <v|x>": 0.041540822785641265,
+   "fourier: rel err functional <v|x>": 5.708064687595909,
+   "fourier: median max evolution time": 743.5736715682942
+  },
+  "T2=300.0, shots=160000, n_c=5": {
+   "spectral: rel err compliance": 0.03352293503751905,
+   "spectral: rel err energy": 0.08654233536968388,
+   "spectral: rel err functional <v|x>": 0.04426595066517461,
+   "fourier: rel err functional <v|x>": 4.449789080076641,
+   "fourier: median max evolution time": 756.2801553362384
+  }
+ },
+ "P3 Poisson N=4": {
+  "C_true": 2.37538863817901,
+  "E_true": 0.28524224119339137,
+  "L_true": [
+   2.7287146861563594,
+   0.0
+  ],
+  "kappa": 9.472135954999576,
+  "T2=inf, shots=10000, n_c=4": {
+   "spectral: rel err compliance": 0.006924730150500829,
+   "spectral: rel err energy": 0.00896365132546268,
+   "spectral: rel err functional <v|x>": 0.03394006121152063,
+   "fourier: rel err functional <v|x>": 1.0158702880238744,
+   "fourier: median max evolution time": 188.47529484419627
+  },
+  "T2=inf, shots=40000, n_c=4": {
+   "spectral: rel err compliance": 0.002005341039640904,
+   "spectral: rel err energy": 0.01058819742301773,
+   "spectral: rel err functional <v|x>": 0.02216639124376086,
+   "fourier: rel err functional <v|x>": 0.596732861697587,
+   "fourier: median max evolution time": 232.97826748324297
+  },
+  "T2=inf, shots=160000, n_c=4": {
+   "spectral: rel err compliance": 0.005232004515828417,
+   "spectral: rel err energy": 0.007135391868077064,
+   "spectral: rel err functional <v|x>": 0.012840493451995155,
+   "fourier: rel err functional <v|x>": 0.15775710170955815,
+   "fourier: median max evolution time": 220.08415154887552
+  },
+  "T2=300.0, shots=10000, n_c=4": {
+   "spectral: rel err compliance": 0.00943019738733592,
+   "spectral: rel err energy": 0.014704446695603397,
+   "spectral: rel err functional <v|x>": 0.055011084655235694,
+   "fourier: rel err functional <v|x>": 1.417444516259533,
+   "fourier: median max evolution time": 201.42393321259505
+  },
+  "T2=300.0, shots=40000, n_c=4": {
+   "spectral: rel err compliance": 0.009246907711882062,
+   "spectral: rel err energy": 0.02419688092691403,
+   "spectral: rel err functional <v|x>": 0.00908749628203934,
+   "fourier: rel err functional <v|x>": 0.8369424340523082,
+   "fourier: median max evolution time": 213.272429543537
+  },
+  "T2=300.0, shots=160000, n_c=4": {
+   "spectral: rel err compliance": 0.0031142593892411552,
+   "spectral: rel err energy": 0.006231271843090997,
+   "spectral: rel err functional <v|x>": 0.018130567368203846,
+   "fourier: rel err functional <v|x>": 0.21523088704424947,
+   "fourier: median max evolution time": 226.6321132610105
+  }
+ },
+ "P4 Toeplitz N=8": {
+  "C_true": 1.4467007086426695,
+  "E_true": 0.49417908952394296,
+  "L_true": [
+   -0.2504370947392162,
+   0.0
+  ],
+  "kappa": 4.028834507207809,
+  "T2=inf, shots=10000, n_c=6": {
+   "spectral: rel err compliance": 0.010999416153088408,
+   "spectral: rel err energy": 0.014031527378137629,
+   "spectral: rel err functional <v|x>": 0.46500073481126547,
+   "fourier: rel err functional <v|x>": 4.506834108020098,
+   "fourier: median max evolution time": 80.16521038464106
+  },
+  "T2=inf, shots=40000, n_c=6": {
+   "spectral: rel err compliance": 0.005066518660282068,
+   "spectral: rel err energy": 0.007407738860581275,
+   "spectral: rel err functional <v|x>": 0.5385026377055081,
+   "fourier: rel err functional <v|x>": 2.6471025661837047,
+   "fourier: median max evolution time": 99.09389898173418
+  },
+  "T2=inf, shots=160000, n_c=6": {
+   "spectral: rel err compliance": 0.007950270787567958,
+   "spectral: rel err energy": 0.011183813278683756,
+   "spectral: rel err functional <v|x>": 0.4775739466744115,
+   "fourier: rel err functional <v|x>": 1.171717930461571,
+   "fourier: median max evolution time": 93.609575333603
+  },
+  "T2=300.0, shots=10000, n_c=5": {
+   "spectral: rel err compliance": 0.00888281311977843,
+   "spectral: rel err energy": 0.017120020034938642,
+   "spectral: rel err functional <v|x>": 0.29273436171605455,
+   "fourier: rel err functional <v|x>": 7.281909809112427,
+   "fourier: median max evolution time": 79.66714588811826
+  },
+  "T2=300.0, shots=40000, n_c=5": {
+   "spectral: rel err compliance": 0.01207236850240775,
+   "spectral: rel err energy": 0.00954920024087051,
+   "spectral: rel err functional <v|x>": 0.49200415180149626,
+   "fourier: rel err functional <v|x>": 2.0891689693149567,
+   "fourier: median max evolution time": 93.14101668264681
+  },
+  "T2=300.0, shots=160000, n_c=5": {
+   "spectral: rel err compliance": 0.007184170811042914,
+   "spectral: rel err energy": 0.002773560897315343,
+   "spectral: rel err functional <v|x>": 0.4977684375223046,
+   "fourier: rel err functional <v|x>": 1.2805249369257803,
+   "fourier: median max evolution time": 94.73264756181945
+  }
+ },
+ "P5 random 4x4": {
+  "C_true": 1.2730052332353523,
+  "E_true": 0.7534598645537065,
+  "L_true": [
+   0.5160225179913647,
+   -0.17758312306288915
+  ],
+  "kappa": 2.3871738533822855,
+  "T2=inf, shots=10000, n_c=5": {
+   "spectral: rel err compliance": 0.001725618523252672,
+   "spectral: rel err energy": 0.0018928946041136584,
+   "spectral: rel err functional <v|x>": 0.02991916460857088,
+   "fourier: rel err functional <v|x>": 1.6758908074698948,
+   "fourier: median max evolution time": 47.49966617857763
+  },
+  "T2=inf, shots=40000, n_c=5": {
+   "spectral: rel err compliance": 0.0017826227779555682,
+   "spectral: rel err energy": 0.0027566942545466924,
+   "spectral: rel err functional <v|x>": 0.013646535226669494,
+   "fourier: rel err functional <v|x>": 0.46084845050264167,
+   "fourier: median max evolution time": 58.715334237654204
+  },
+  "T2=inf, shots=160000, n_c=5": {
+   "spectral: rel err compliance": 0.0010584882018746067,
+   "spectral: rel err energy": 0.0011538505005434065,
+   "spectral: rel err functional <v|x>": 0.00939980414032956,
+   "fourier: rel err functional <v|x>": 0.40413697711980395,
+   "fourier: median max evolution time": 55.465750768071985
+  },
+  "T2=300.0, shots=10000, n_c=5": {
+   "spectral: rel err compliance": 0.005104622464279526,
+   "spectral: rel err energy": 0.00863320069353278,
+   "spectral: rel err functional <v|x>": 0.05206727914208158,
+   "fourier: rel err functional <v|x>": 1.3144914808653403,
+   "fourier: median max evolution time": 48.07223133342456
+  },
+  "T2=300.0, shots=40000, n_c=5": {
+   "spectral: rel err compliance": 0.0025189021437824143,
+   "spectral: rel err energy": 0.0038366016460591353,
+   "spectral: rel err functional <v|x>": 0.03206365050862149,
+   "fourier: rel err functional <v|x>": 0.6338860473821222,
+   "fourier: median max evolution time": 54.191944871211206
+  },
+  "T2=300.0, shots=160000, n_c=5": {
+   "spectral: rel err compliance": 0.0013804968235183056,
+   "spectral: rel err energy": 0.002328426841877001,
+   "spectral: rel err functional <v|x>": 0.02198883296413413,
+   "fourier: rel err functional <v|x>": 0.4446156001250796,
+   "fourier: median max evolution time": 56.131195986499705
+  }
+ }
+}

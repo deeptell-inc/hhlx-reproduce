@@ -1,0 +1,23 @@
+{
+ "kappa": 492.52206967757644,
+ "target": 0.9999,
+ "d_max": 199,
+ "exact spectrum": {
+  "nodes": 29,
+  "node-aware": null,
+  "interval": null,
+  "interval + spectral correction": null
+ },
+ "projective, 10-bit clock": {
+  "nodes": 29,
+  "node-aware": null,
+  "interval": null,
+  "interval + spectral correction": null
+ },
+ "sequential, delta=1e-4": {
+  "nodes": 15,
+  "node-aware": null,
+  "interval": null,
+  "interval + spectral correction": null
+ }
+}

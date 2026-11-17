@@ -1,0 +1,109 @@
+{
+ "shots": 10000,
+ "systems": {
+  "P5 random 4x4": {
+   "T=30": {
+    "eigenvalues known": 0.009853719596020577,
+    "eigenvalues unknown": 0.010072207120422805
+   },
+   "T=100": {
+    "eigenvalues known": 0.01013434438371642,
+    "eigenvalues unknown": 0.010151087553378409
+   },
+   "T=300": {
+    "eigenvalues known": 0.01005992881177033,
+    "eigenvalues unknown": 0.010060817079670725
+   },
+   "T=1000": {
+    "eigenvalues known": 0.01002927520180041,
+    "eigenvalues unknown": 0.01002985038373032
+   },
+   "T=2000": {
+    "eigenvalues known": 0.01000101867872398,
+    "eigenvalues unknown": 0.01000114203786375
+   },
+   "optimised design (eigenvalues known)": {
+    "eigenvalues known": 0.0030198673144751585,
+    "settings with 99% of the weight": 3
+   }
+  },
+  "P3 Poisson N=4": {
+   "T=30": {
+    "eigenvalues known": 0.037225600723005944,
+    "eigenvalues unknown": 0.040661089719347905
+   },
+   "T=100": {
+    "eigenvalues known": 0.037038377056085266,
+    "eigenvalues unknown": 0.03729943724633725
+   },
+   "T=300": {
+    "eigenvalues known": 0.03719491671846266,
+    "eigenvalues unknown": 0.03722534035109718
+   },
+   "T=1000": {
+    "eigenvalues known": 0.0370984901901081,
+    "eigenvalues unknown": 0.037101397308284115
+   },
+   "T=2000": {
+    "eigenvalues known": 0.03718340321603658,
+    "eigenvalues unknown": 0.03718372798624239
+   },
+   "optimised design (eigenvalues known)": {
+    "eigenvalues known": 0.019305539133129518,
+    "settings with 99% of the weight": 5
+   }
+  },
+  "P3 Poisson N=8": {
+   "T=30": {
+    "eigenvalues known": 0.13194956295499372,
+    "eigenvalues unknown": 0.21154312365588335
+   },
+   "T=100": {
+    "eigenvalues known": 0.13308635804455485,
+    "eigenvalues unknown": 0.14153252024490776
+   },
+   "T=300": {
+    "eigenvalues known": 0.13331327572205617,
+    "eigenvalues unknown": 0.13430154634603858
+   },
+   "T=1000": {
+    "eigenvalues known": 0.13363574516235122,
+    "eigenvalues unknown": 0.13372549210542511
+   },
+   "T=2000": {
+    "eigenvalues known": 0.133192641271501,
+    "eigenvalues unknown": 0.1332276736461867
+   },
+   "optimised design (eigenvalues known)": {
+    "eigenvalues known": 0.059766534110753076,
+    "settings with 99% of the weight": 8
+   }
+  },
+  "P4 Toeplitz N=8": {
+   "T=30": {
+    "eigenvalues known": 0.020169623627768928,
+    "eigenvalues unknown": 0.021450518808241267
+   },
+   "T=100": {
+    "eigenvalues known": 0.02160701367167472,
+    "eigenvalues unknown": 0.021970397168772453
+   },
+   "T=300": {
+    "eigenvalues known": 0.022133774679851913,
+    "eigenvalues unknown": 0.022230706260951246
+   },
+   "T=1000": {
+    "eigenvalues known": 0.02243437306788251,
+    "eigenvalues unknown": 0.022435952930782817
+   },
+   "T=2000": {
+    "eigenvalues known": 0.022329556366698228,
+    "eigenvalues unknown": 0.02233122637669403
+   },
+   "optimised design (eigenvalues known)": {
+    "eigenvalues known": 0.007469375012129419,
+    "settings with 99% of the weight": 6
+   }
+  }
+ }
+}

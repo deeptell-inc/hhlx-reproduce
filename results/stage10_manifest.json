@@ -1,0 +1,115 @@
+{
+ "written": "2026-11-11 20:15:13",
+ "code": {
+  "stage10_power_grid.py": {
+   "sha256": "832c1716ee19fccf7c46b14fbe45976e639d8163943e61d0dda06c9b9c29a618",
+   "mtime": 1794391226.0744574
+  },
+  "data/grid_cases.json": {
+   "sha256": "e495e636f640cdf981828a76912bd2a00974a091148976ff06dc033947f1b3ba",
+   "mtime": 1794391205.7098904
+  },
+  "stage7b_qks_baseline.py": {
+   "sha256": "739dbf5da3e7d248a254c7f7d1f726c1168b25598d7dca10f46d2fae98c1c7a5",
+   "mtime": 1793781231.471328
+  }
+ },
+ "results": {
+  "results/stage10_backend.case14.json": {
+   "sha256": "e4c42a1a5107c8ce7808a47a8c038fbf531567d50a9669289c71d7c0b1a4ae7d",
+   "mtime": 1794391644.1866155
+  },
+  "results/stage10_backend.case30.json": {
+   "sha256": "c9bd54a5c265aeb7b52ce6e0e59a1e2eb8983f956eb91ed0061bab2f5241e3fc",
+   "mtime": 1794391714.8528605
+  },
+  "results/stage10_backend.case9.json": {
+   "sha256": "1d65e49aa4395bfdca4412a3f315652e85e85aa4c336aea106b3759971223dc4",
+   "mtime": 1794391802.7035294
+  },
+  "results/stage10_compare.case14.json": {
+   "sha256": "6200bc886ac5742fd43532d02ce26be8f7c00c709c26b3a5eef2160593c6198d",
+   "mtime": 1794393068.692624
+  },
+  "results/stage10_compare.case30.json": {
+   "sha256": "a5beb80b677f0a284b84ce9a6362dd939f6f5c391238e0fc1d75026779e00ea5",
+   "mtime": 1794393549.4647074
+  },
+  "results/stage10_compare.case9.json": {
+   "sha256": "a717ecde2d33271bb58170de7d5165441e1b326fdf3e676e0d91e77513913533",
+   "mtime": 1794392615.036124
+  },
+  "results/stage10_methods.case14.json": {
+   "sha256": "721d027c98cb0f5986a50e258d7c3705f44a551dd1ac0cf5b55d911734867989",
+   "mtime": 1794395713.4598746
+  },
+  "results/stage10_methods.case30.json": {
+   "sha256": "ddc930b32482710597ba4a0cbc2c7dedc1d5e043679fdc12741ca5774d3b4bf6",
+   "mtime": 1794395713.5858598
+  },
+  "results/stage10_methods.case9.json": {
+   "sha256": "b1ccaaac4514d109c01202791bb21dba520f942aa23cf805a5312c2a9d2131a4",
+   "mtime": 1794395713.3390427
+  },
+  "results/stage10_observables.case14.json": {
+   "sha256": "0a4f57b5852952139f1df7fe7ccc0ee17948ce346fa7a42718ea5c83bd3c2fdc",
+   "mtime": 1794391287.1004825
+  },
+  "results/stage10_observables.case30.json": {
+   "sha256": "219bd071a4d241d4aeb3f9156ef32236ed332511aa7d758f0e190bcb46874ce0",
+   "mtime": 1794391288.2629023
+  },
+  "results/stage10_observables.case9.json": {
+   "sha256": "f64bc5dbef0579237b1a58b4739ef538a7be40f4ababe3370d3409d206f88aa1",
+   "mtime": 1794391284.3804657
+  },
+  "results/stage10_poly.case14.json": {
+   "sha256": "1a954f81f842fbd24f28a4bf752728394d3f0e5d674708503b30c9367db18954",
+   "mtime": 1794391453.9552941
+  },
+  "results/stage10_poly.case30.json": {
+   "sha256": "de3a9ea5bfa0c0a9da10528af9af59fd22be1041fc51db9c0317a68e38a6eae2",
+   "mtime": 1794391468.1412623
+  },
+  "results/stage10_poly.case9.json": {
+   "sha256": "af94eb9d7f8f71f8e8df300259fda070ef4c317570cc3af1594dd58825567119",
+   "mtime": 1794391438.0098162
+  },
+  "results/stage10_qoi.case14.json": {
+   "sha256": "9dbd807615f5ca62c2eda429cc2471ef48635e79a16590648297be18b494f3e9",
+   "mtime": 1794393221.0582657
+  },
+  "results/stage10_qoi.case30.json": {
+   "sha256": "090fb92c3b4037c2b410d68ffe6d2fc893d97b60be91a566a183c8b0085b8657",
+   "mtime": 1794393367.1237144
+  },
+  "results/stage10_qoi.case9.json": {
+   "sha256": "f10146fbc1e3a5ae424554d2162f5167014f409bd0307ce402fdb28e1cc2c79e",
+   "mtime": 1794393048.9276676
+  },
+  "results/stage10_scale.case118.x1.json": {
+   "sha256": "44afeeb948fb12336874a0e6343e3ec3f5c574440c09f9919dcf04e46fde04cb",
+   "mtime": 1794391548.838285
+  },
+  "results/stage10_scale.case118.x16.json": {
+   "sha256": "30eb1f915586a6526c1718152ef3f3fa96023c49ccaa0b149a3f1a55ee8b0f51",
+   "mtime": 1794395172.176052
+  },
+  "results/stage10_scale.case118.x4.json": {
+   "sha256": "28bcc1d224c297e9aaa3726158f459e5f1c9b537ebcc2afea3fa69ab0b4977c0",
+   "mtime": 1794392518.826619
+  },
+  "results/stage10_scale.case30.x1.json": {
+   "sha256": "7f76ffe9d6191c8431c4ca473f34cbf2865d30605b3c6e38198d10d4e0c504fc",
+   "mtime": 1794391637.8254602
+  },
+  "results/stage10_scale.case30.x16.json": {
+   "sha256": "30641936683b8846eaaa14be0d79e7151130e7d19064933d60a8f014a67d9de7",
+   "mtime": 1794395713.109159
+  },
+  "results/stage10_scale.case30.x4.json": {
+   "sha256": "8d125c5f98f0cf88e5098cf7df468b3cf92f30e256599bc09af30ad1b8914771",
+   "mtime": 1794392773.044972
+  }
+ }
+}

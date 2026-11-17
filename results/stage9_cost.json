@@ -1,0 +1,372 @@
+{
+ "learned prior, T2=inf": {
+  "components": 8,
+  "copies": 11710,
+  "T_tot": 5000000.0
+ },
+ "T2=inf, prior=flat, p_out=0.01": {
+  "sig_id": 0.011190444287802496,
+  "copies": 24000,
+  "converged": 1.0,
+  "T_id*sig_id mean": 5.516975132786952,
+  "T_id*sig_id p99": 8.105568278928518,
+  "rms err/sig_id": 0.7608047865385251,
+  "frac |err|>3 sig_id": 0.001958333333333333,
+  "frac |err|>4 sig_id": 0.0010416666666666667
+ },
+ "T2=inf, prior=flat, p_out=0.001": {
+  "sig_id": 0.011190444287802496,
+  "copies": 24000,
+  "converged": 1.0,
+  "T_id*sig_id mean": 6.544394624269269,
+  "T_id*sig_id p99": 10.443235316015196,
+  "rms err/sig_id": 0.6777386877144334,
+  "frac |err|>3 sig_id": 0.00020833333333333335,
+  "frac |err|>4 sig_id": 8.333333333333333e-05
+ },
+ "T2=inf, prior=flat, p_out=0.0001": {
+  "sig_id": 0.011190444287802496,
+  "copies": 24000,
+  "converged": 1.0,
+  "T_id*sig_id mean": 8.78954831936909,
+  "T_id*sig_id p99": 14.502363682962137,
+  "rms err/sig_id": 0.6453359774591632,
+  "frac |err|>3 sig_id": 0.00016666666666666666,
+  "frac |err|>4 sig_id": 0.0
+ },
+ "T2=inf, prior=flat, p_out=1e-05": {
+  "sig_id": 0.011190444287802496,
+  "copies": 24000,
+  "converged": 1.0,
+  "T_id*sig_id mean": 11.558510619340334,
+  "T_id*sig_id p99": 19.478156889357386,
+  "rms err/sig_id": 0.6136449335578723,
+  "frac |err|>3 sig_id": 0.0,
+  "frac |err|>4 sig_id": 0.0
+ },
+ "T2=inf, prior=learned, p_out=0.01": {
+  "sig_id": 0.011190444287802496,
+  "copies": 24000,
+  "converged": 1.0,
+  "T_id*sig_id mean": 1.2707616300020521,
+  "T_id*sig_id p99": 3.987321663099248,
+  "rms err/sig_id": 0.853574132053522,
+  "frac |err|>3 sig_id": 0.0003333333333333333,
+  "frac |err|>4 sig_id": 0.0003333333333333333
+ },
+ "T2=inf, prior=learned, p_out=0.001": {
+  "sig_id": 0.011190444287802496,
+  "copies": 24000,
+  "converged": 1.0,
+  "T_id*sig_id mean": 2.749151742148463,
+  "T_id*sig_id p99": 7.496378279233771,
+  "rms err/sig_id": 0.70474239002454,
+  "frac |err|>3 sig_id": 0.0,
+  "frac |err|>4 sig_id": 0.0
+ },
+ "T2=inf, prior=learned, p_out=0.0001": {
+  "sig_id": 0.011190444287802496,
+  "copies": 24000,
+  "converged": 1.0,
+  "T_id*sig_id mean": 5.019359349006328,
+  "T_id*sig_id p99": 12.592127890261379,
+  "rms err/sig_id": 0.7012080859093904,
+  "frac |err|>3 sig_id": 0.0,
+  "frac |err|>4 sig_id": 0.0
+ },
+ "T2=inf, prior=learned, p_out=1e-05": {
+  "sig_id": 0.011190444287802496,
+  "copies": 24000,
+  "converged": 1.0,
+  "T_id*sig_id mean": 7.977586329982934,
+  "T_id*sig_id p99": 18.15650484756412,
+  "rms err/sig_id": 0.7037182574069859,
+  "frac |err|>3 sig_id": 0.0,
+  "frac |err|>4 sig_id": 0.0
+ },
+ "T2=inf, prior=exact, p_out=0.01": {
+  "sig_id": 0.011190444287802496,
+  "copies": 24000,
+  "converged": 1.0,
+  "T_id*sig_id mean": 1.248143556037274,
+  "T_id*sig_id p99": 3.602512157500418,
+  "rms err/sig_id": 0.5694575440709472,
+  "frac |err|>3 sig_id": 0.000875,
+  "frac |err|>4 sig_id": 0.000875
+ },
+ "T2=inf, prior=exact, p_out=0.001": {
+  "sig_id": 0.011190444287802496,
+  "copies": 24000,
+  "converged": 1.0,
+  "T_id*sig_id mean": 2.5586992316980517,
+  "T_id*sig_id p99": 6.2027806887899075,
+  "rms err/sig_id": 0.048875965103134335,
+  "frac |err|>3 sig_id": 4.1666666666666665e-05,
+  "frac |err|>4 sig_id": 0.0
+ },
+ "T2=inf, prior=exact, p_out=0.0001": {
+  "sig_id": 0.011190444287802496,
+  "copies": 24000,
+  "converged": 1.0,
+  "T_id*sig_id mean": 4.513717990201037,
+  "T_id*sig_id p99": 9.422850716258031,
+  "rms err/sig_id": 0.041437780944811674,
+  "frac |err|>3 sig_id": 0.0,
+  "frac |err|>4 sig_id": 0.0
+ },
+ "T2=inf, prior=exact, p_out=1e-05": {
+  "sig_id": 0.011190444287802496,
+  "copies": 24000,
+  "converged": 1.0,
+  "T_id*sig_id mean": 6.9245942673264,
+  "T_id*sig_id p99": 13.124609643804543,
+  "rms err/sig_id": 0.03791916325694668,
+  "frac |err|>3 sig_id": 0.0,
+  "frac |err|>4 sig_id": 0.0
+ },
+ "learned prior, T2=300.0": {
+  "components": 8,
+  "copies": 7839,
+  "T_tot": 5000000.0
+ },
+ "T2=300.0, prior=flat, p_out=0.01": {
+  "sig_id": 0.011190444287802496,
+  "copies": 24000,
+  "converged": 1.0,
+  "T_id*sig_id mean": 6.979443574681178,
+  "T_id*sig_id p99": 10.109411300263627,
+  "rms err/sig_id": 0.8766109513353249,
+  "frac |err|>3 sig_id": 0.001375,
+  "frac |err|>4 sig_id": 0.0007083333333333334
+ },
+ "T2=300.0, prior=flat, p_out=0.001": {
+  "sig_id": 0.011190444287802496,
+  "copies": 24000,
+  "converged": 1.0,
+  "T_id*sig_id mean": 8.26865122738307,
+  "T_id*sig_id p99": 13.491093421951167,
+  "rms err/sig_id": 0.7570688494737845,
+  "frac |err|>3 sig_id": 0.0004583333333333333,
+  "frac |err|>4 sig_id": 4.1666666666666665e-05
+ },
+ "T2=300.0, prior=flat, p_out=0.0001": {
+  "sig_id": 0.011190444287802496,
+  "copies": 24000,
+  "converged": 1.0,
+  "T_id*sig_id mean": 11.784361659315769,
+  "T_id*sig_id p99": 21.63848287644684,
+  "rms err/sig_id": 0.7060298079176923,
+  "frac |err|>3 sig_id": 0.0,
+  "frac |err|>4 sig_id": 0.0
+ },
+ "T2=300.0, prior=flat, p_out=1e-05": {
+  "sig_id": 0.011190444287802496,
+  "copies": 24000,
+  "converged": 1.0,
+  "T_id*sig_id mean": 16.248594513553492,
+  "T_id*sig_id p99": 32.0627253545588,
+  "rms err/sig_id": 0.6775994630528718,
+  "frac |err|>3 sig_id": 0.0,
+  "frac |err|>4 sig_id": 0.0
+ },
+ "T2=300.0, prior=learned, p_out=0.01": {
+  "sig_id": 0.011190444287802496,
+  "copies": 24000,
+  "converged": 1.0,
+  "T_id*sig_id mean": 1.50695158963346,
+  "T_id*sig_id p99": 5.234086490937848,
+  "rms err/sig_id": 0.4711835044850054,
+  "frac |err|>3 sig_id": 0.0004583333333333333,
+  "frac |err|>4 sig_id": 0.0004583333333333333
+ },
+ "T2=300.0, prior=learned, p_out=0.001": {
+  "sig_id": 0.011190444287802496,
+  "copies": 24000,
+  "converged": 1.0,
+  "T_id*sig_id mean": 3.3417001590539623,
+  "T_id*sig_id p99": 10.406045723313737,
+  "rms err/sig_id": 0.4514736595333668,
+  "frac |err|>3 sig_id": 8.333333333333333e-05,
+  "frac |err|>4 sig_id": 8.333333333333333e-05
+ },
+ "T2=300.0, prior=learned, p_out=0.0001": {
+  "sig_id": 0.011190444287802496,
+  "copies": 24000,
+  "converged": 1.0,
+  "T_id*sig_id mean": 6.352031648006281,
+  "T_id*sig_id p99": 16.97724827107557,
+  "rms err/sig_id": 0.0607002428792214,
+  "frac |err|>3 sig_id": 0.0,
+  "frac |err|>4 sig_id": 0.0
+ },
+ "T2=300.0, prior=learned, p_out=1e-05": {
+  "sig_id": 0.011190444287802496,
+  "copies": 24000,
+  "converged": 1.0,
+  "T_id*sig_id mean": 9.970127067184004,
+  "T_id*sig_id p99": 23.28177551636553,
+  "rms err/sig_id": 0.05832993770514913,
+  "frac |err|>3 sig_id": 0.0,
+  "frac |err|>4 sig_id": 0.0
+ },
+ "T2=300.0, prior=exact, p_out=0.01": {
+  "sig_id": 0.011190444287802496,
+  "copies": 24000,
+  "converged": 1.0,
+  "T_id*sig_id mean": 1.4831536343835445,
+  "T_id*sig_id p99": 5.190137798452149,
+  "rms err/sig_id": 0.5277684376984983,
+  "frac |err|>3 sig_id": 0.0005416666666666666,
+  "frac |err|>4 sig_id": 0.0005416666666666666
+ },
+ "T2=300.0, prior=exact, p_out=0.001": {
+  "sig_id": 0.011190444287802496,
+  "copies": 24000,
+  "converged": 1.0,
+  "T_id*sig_id mean": 3.3283027337041724,
+  "T_id*sig_id p99": 10.524859846504018,
+  "rms err/sig_id": 0.14048970324900514,
+  "frac |err|>3 sig_id": 4.1666666666666665e-05,
+  "frac |err|>4 sig_id": 4.1666666666666665e-05
+ },
+ "T2=300.0, prior=exact, p_out=0.0001": {
+  "sig_id": 0.011190444287802496,
+  "copies": 24000,
+  "converged": 1.0,
+  "T_id*sig_id mean": 6.393519879448286,
+  "T_id*sig_id p99": 17.099394539206838,
+  "rms err/sig_id": 0.04917747055196348,
+  "frac |err|>3 sig_id": 0.0,
+  "frac |err|>4 sig_id": 0.0
+ },
+ "T2=300.0, prior=exact, p_out=1e-05": {
+  "sig_id": 0.011190444287802496,
+  "copies": 24000,
+  "converged": 1.0,
+  "T_id*sig_id mean": 9.910975198693874,
+  "T_id*sig_id p99": 23.148849750446054,
+  "rms err/sig_id": 0.04742304095671291,
+  "frac |err|>3 sig_id": 0.0,
+  "frac |err|>4 sig_id": 0.0
+ },
+ "miscalibration: calibrated, T2=300, p_out=0.001": {
+  "sig_id": 0.011190444287802496,
+  "copies": 24000,
+  "converged": 1.0,
+  "T_id*sig_id mean": 8.26865122738307,
+  "T_id*sig_id p99": 13.491093421951167,
+  "rms err/sig_id": 0.7570688494737845,
+  "frac |err|>3 sig_id": 0.0004583333333333333,
+  "frac |err|>4 sig_id": 4.1666666666666665e-05
+ },
+ "miscalibration: calibrated, T2=300, p_out=0.0001": {
+  "sig_id": 0.011190444287802496,
+  "copies": 24000,
+  "converged": 1.0,
+  "T_id*sig_id mean": 11.784361659315769,
+  "T_id*sig_id p99": 21.63848287644684,
+  "rms err/sig_id": 0.7060298079176923,
+  "frac |err|>3 sig_id": 0.0,
+  "frac |err|>4 sig_id": 0.0
+ },
+ "miscalibration: T2 300 -> 100, p_out=0.001": {
+  "sig_id": 0.011190444287802496,
+  "copies": 24000,
+  "converged": 1.0,
+  "T_id*sig_id mean": 9.331243838229646,
+  "T_id*sig_id p99": 19.562041840450746,
+  "rms err/sig_id": 1.0432487225569942,
+  "frac |err|>3 sig_id": 0.00825,
+  "frac |err|>4 sig_id": 0.002625
+ },
+ "miscalibration: T2 300 -> 100, p_out=0.0001": {
+  "sig_id": 0.011190444287802496,
+  "copies": 24000,
+  "converged": 1.0,
+  "T_id*sig_id mean": 16.391008092661394,
+  "T_id*sig_id p99": 39.489331302570434,
+  "rms err/sig_id": 0.8426029728160094,
+  "frac |err|>3 sig_id": 0.0004166666666666667,
+  "frac |err|>4 sig_id": 4.1666666666666665e-05
+ },
+ "miscalibration: calibrated, no dephasing, p_out=0.001": {
+  "sig_id": 0.011190444287802496,
+  "copies": 24000,
+  "converged": 1.0,
+  "T_id*sig_id mean": 6.544394624269269,
+  "T_id*sig_id p99": 10.443235316015196,
+  "rms err/sig_id": 0.6777386877144334,
+  "frac |err|>3 sig_id": 0.00020833333333333335,
+  "frac |err|>4 sig_id": 8.333333333333333e-05
+ },
+ "miscalibration: calibrated, no dephasing, p_out=0.0001": {
+  "sig_id": 0.011190444287802496,
+  "copies": 24000,
+  "converged": 1.0,
+  "T_id*sig_id mean": 8.78954831936909,
+  "T_id*sig_id p99": 14.502363682962137,
+  "rms err/sig_id": 0.6453359774591632,
+  "frac |err|>3 sig_id": 0.00016666666666666666,
+  "frac |err|>4 sig_id": 0.0
+ },
+ "miscalibration: p_d 0.02 -> 0.10, p_out=0.001": {
+  "sig_id": 0.011190444287802496,
+  "copies": 24000,
+  "converged": 1.0,
+  "T_id*sig_id mean": 6.99479301558253,
+  "T_id*sig_id p99": 13.043086726490575,
+  "rms err/sig_id": 1.009960591319749,
+  "frac |err|>3 sig_id": 0.002625,
+  "frac |err|>4 sig_id": 0.0011666666666666668
+ },
+ "miscalibration: p_d 0.02 -> 0.10, p_out=0.0001": {
+  "sig_id": 0.011190444287802496,
+  "copies": 24000,
+  "converged": 1.0,
+  "T_id*sig_id mean": 10.13228754694889,
+  "T_id*sig_id p99": 20.544470639204768,
+  "rms err/sig_id": 0.8192031397719935,
+  "frac |err|>3 sig_id": 0.0002916666666666667,
+  "frac |err|>4 sig_id": 4.1666666666666665e-05
+ },
+ "miscalibration: p_d 0.02 -> 0.20, p_out=0.001": {
+  "sig_id": 0.011190444287802496,
+  "copies": 24000,
+  "converged": 1.0,
+  "T_id*sig_id mean": 7.863817208381573,
+  "T_id*sig_id p99": 17.02369663949819,
+  "rms err/sig_id": 1.6376985202690597,
+  "frac |err|>3 sig_id": 0.008708333333333334,
+  "frac |err|>4 sig_id": 0.004291666666666667
+ },
+ "miscalibration: p_d 0.02 -> 0.20, p_out=0.0001": {
+  "sig_id": 0.011190444287802496,
+  "copies": 24000,
+  "converged": 1.0,
+  "T_id*sig_id mean": 12.683520058535121,
+  "T_id*sig_id p99": 29.80746701549554,
+  "rms err/sig_id": 1.122469461864887,
+  "frac |err|>3 sig_id": 0.0016666666666666668,
+  "frac |err|>4 sig_id": 0.0006666666666666666
+ },
+ "miscalibration: T2 inf -> 1000, p_out=0.001": {
+  "sig_id": 0.011190444287802496,
+  "copies": 24000,
+  "converged": 1.0,
+  "T_id*sig_id mean": 6.67994229051937,
+  "T_id*sig_id p99": 11.219848390878868,
+  "rms err/sig_id": 0.7308871774998693,
+  "frac |err|>3 sig_id": 0.0007916666666666666,
+  "frac |err|>4 sig_id": 0.00016666666666666666
+ },
+ "miscalibration: T2 inf -> 1000, p_out=0.0001": {
+  "sig_id": 0.011190444287802496,
+  "copies": 24000,
+  "converged": 1.0,
+  "T_id*sig_id mean": 9.231076590815205,
+  "T_id*sig_id p99": 17.034552044634285,
+  "rms err/sig_id": 0.6841960223428434,
+  "frac |err|>3 sig_id": 0.000125,
+  "frac |err|>4 sig_id": 0.0
+ }
+}

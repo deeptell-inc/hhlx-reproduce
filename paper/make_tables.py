@@ -1,0 +1,259 @@
+"""Regenerate the table bodies of main.tex and Fig. 2 from the result JSON files (consistent rounding, no hand
+transcription).  Usage: python3 make_tables.py  -> rewrites main.tex in place between the markers and
+figs/fig2_detection.png."""
+import json, re, glob, numpy as np
+R4 = json.load(open("../results/stage4_results.json")); R7 = json.load(open("../results/stage7_results.json")); RQ = json.load(open("../results/stage7b_qks.json"))
+NAMES = [("P5 random 4x4", r"Random $4\times4$", "2.2"), ("P3 Poisson N=4", r"Poisson $N=4$", "9.5"), ("P3 Poisson N=8", r"Poisson $N=8$", "32"), ("P4 Toeplitz N=8", r"Toeplitz $N=8$", "4.0")]
+
+
+def f4(v): return f"{v:.3f}" if v < 0.9995 else f"{v:.4f}"
+def cell(q, iqr=True):
+    s = f4(q["median"])
+    if iqr and q["q75"] - q["q25"] > 0.01: s += f" [{f4(q['q25'])}, {f4(q['q75'])}]"
+    return s
+def t2(row): return r"$\infty$" if row["T2"] == "inf" else f"{int(row['T2'])}"
+
+
+def table1():
+    out = []
+    for key, lab, kap in NAMES:
+        for row in R4[key]:
+            out.append(f"{lab} & {t2(row)} & {kap} & {cell(row['MM-QCELS'])} & {cell(row['QMEGS'])} & {cell(row['QPE6'])} & {cell(row['BC2 ideal'])} ({row['n_c']})\\\\")
+    return "\n".join(out)
+
+
+def e(x):
+    """Compact scientific notation for table cells: 2.8e-6; values >= 0.01 as decimals."""
+    if 0.01 <= x < 1000: return f"{x:.3f}"
+    a, b = f"{x:.1e}".split("e"); return f"{a}e{int(b)}"
+
+
+def table2():
+    """Real clock with the spectrum learned by the projective estimator (stage 9 back end: shared noise trajectory,
+    heralded-ensemble fidelity)."""
+    R = json.load(open("../results/stage9_backend.json")); out = []
+    for key, lab, kap in NAMES:
+        for T2 in ("inf", "300.0"):
+            v = R[key][f"T2={T2}"]; g = lambda k: f4(v["clock: " + k])
+            out.append(f"{lab} & {r'$\infty$' if T2 == 'inf' else 300} & {v['n_c']} & {g('idealised')} & {g('learned angles')} & {g('+t0')} & {g('no learning')} & {g('exact-spectrum t0')}\\\\")
+    return "\n".join(out)
+
+
+def pct(x):
+    return f"{100*x:.2f}" if x < 0.00995 else (f"{100*x:.1f}" if x < 0.0995 else f"{100*x:.0f}")
+def table4():
+    """Observables: spectral (projective) columns from the six jointly timed runs of stage 9 (the same runs as the
+    projective columns of the sequential comparison), QKS and Fourier columns from stages 7b and 7."""
+    RP = load("stage9_qoi"); out = []
+    for key, lab, kap in NAMES:
+        for T2 in ("inf", 300.0):
+            rows = {}
+            for shots in (10000, 160000):
+                k7 = [k for k in R7[key] if k.startswith(f"T2={T2 if T2=='inf' else T2}, shots={shots},")][0]
+                r9 = next(v for k, v in RP[key].items() if k.startswith(f"T2={T2 if T2=='inf' else T2}, shots={shots},"))["projective"]
+                rows[shots] = (r9, RQ[key][f"T2={T2 if T2=='inf' else T2}, shots={shots}"], R7[key][k7])
+            s = lambda r: f"{pct(r['eC'])} / {pct(r['eE'])} / {pct(r['eL'])}\\%"
+            q = lambda r: f"{pct(r['rel err C'])} / {pct(r['rel err E'])} / {pct(r['rel err L'])}\\%"
+            out.append(f"{lab} & {r'$\infty$' if T2=='inf' else 300} & {s(rows[10000][0])} & {s(rows[160000][0])} & {q(rows[10000][1])} & {q(rows[160000][1])} & {pct(rows[10000][2]['fourier: rel err functional <v|x>'])} / {pct(rows[160000][2]['fourier: rel err functional <v|x>'])}\\%\\\\")
+    return "\n".join(out)
+
+
+def load(stem):
+    """Merge the per-process part files of stage 9."""
+    out = {}
+    for p in sorted(glob.glob(f"../results/{stem}.part*.json")):
+        for k, v in json.load(open(p)).items():
+            out[k] = out.get(k, []) + v if isinstance(v, list) else v
+    return out
+
+
+def sci(x):
+    """1.47e-07 -> $1.5\times10^{-7}$; values >= 0.01 as decimals."""
+    if 0.01 <= x < 1000: return f"{x:.3f}"
+    m, e = f"{x:.1e}".split("e"); return f"${m}\\times10^{{{int(e)}}}$"
+
+
+def _cmp(key, T2):
+    """Rows of the matched-time comparison for one system and T2: projective, projective with target, and the
+    sequential variants at the default (floor-limited) resolution."""
+    rows = load("stage9_compare")[key][f"T2={T2}"]; seq = [(k, v) for k, v in rows.items() if k.startswith("sequential")]
+    sid = max(float(k.split("sig_id=")[1].rstrip(")")) for k, _ in seq)
+    g = lambda frac, tag: next(v for k, v in seq if f"budget x{frac}, {tag}, sig_id={sid:.4f}" in k)
+    return {"pro": next(v for k, v in rows.items() if k.startswith("projective (")), "prot": rows["projective with target delta=0.001"],
+            "seq3": g(1.0, "delta=0.001"), "seq4": g(1.0, "delta=0.0001"), "seq3s": g(0.1, "delta=0.001"), "seqn": g(1.0, "no target, 1 refinement per copy")}
+
+
+def table_matched():
+    out = []
+    for key, lab, kap in NAMES:
+        for T2 in ("inf", "300.0"):
+            c = _cmp(key, T2); mw = lambda v: f"{e(v['1-F'])} & {e(v['1-F_max'])}"
+            out.append(f"{lab} & {r'$\infty$' if T2 == 'inf' else 300} & {e(c['pro']['T'])} & {mw(c['pro'])} & {mw(c['prot'])} & {mw(c['seqn'])} & {mw(c['seq3'])} & {c['seq3']['m']:g} & {e(c['seq4']['1-F'])} & {e(c['seq3s']['1-F'])}\\\\")
+    return "\n".join(out)
+
+
+def table_matchedC():
+    """Compliance error and number of samples in the runs of the matched-time table."""
+    out = []
+    for key, lab, kap in NAMES:
+        for T2 in ("inf", "300.0"):
+            c = _cmp(key, T2)
+            out.append(f"{lab} & {r'$\infty$' if T2 == 'inf' else 300} & {pct(c['pro']['eC'])} & {pct(c['prot']['eC'])} & {pct(c['seqn']['eC'])} & {pct(c['seq3']['eC'])} & {c['prot']['shots']:.0f} & {c['seqn']['copies']:.0f} & {c['seq3']['copies']:.0f}\\\\")
+    return "\n".join(out)
+
+
+def table_qoiseq():
+    R = load("stage9_qoi"); out = []
+    for key, lab, kap in NAMES:
+        for T2 in ("inf", "300.0"):
+            cells = []
+            for shots in (10000, 160000):
+                v = next(v for k, v in R[key].items() if k.startswith(f"T2={T2}, shots={shots},"))
+                for meth in ("projective", "sequential"):
+                    cells.append(f"{pct(v[meth]['eC'])} / {pct(v[meth]['eE'])} / {pct(v[meth]['eL'])}\\%")
+            out.append(f"{lab} & {r'$\infty$' if T2 == 'inf' else 300} & " + " & ".join(cells) + "\\\\")
+    return "\n".join(out)
+
+
+def f5(v): return f"{v:.3f}" if v < 0.99 else (f"{v:.4f}" if v < 0.9995 else f"{v:.5f}")
+def table_window():
+    R = json.load(open("../results/stage9_backend.json")); out = []
+    cols = ("uniform +-1", "uniform+t0opt +-1", "uniform +-2", "sine +-2", "DPSS NW=1.5 +-2", "DPSS NW=2.0 +-2", "DPSS NW=2.0 +-1")
+    for key, lab, kap in NAMES:
+        for T2 in ("inf", "300.0"):
+            v = R[key][f"T2={T2}"]
+            for nc in (v["n_c"], v["n_c"] + 1):
+                out.append(f"{lab} & {r'$\infty$' if T2 == 'inf' else 300} & {nc} & " + " & ".join(f5(v[f"window: {c} n_c={nc}"]) for c in cols) + "\\\\")
+    return "\n".join(out)
+
+
+def table_cost():
+    R = json.load(open("../results/stage9_cost.json")); out = []
+    fr = lambda x: "0" if x == 0 else e(x)
+    for p, lab in ((0.01, "$10^{-2}$"), (0.001, "$10^{-3}$"), (0.0001, "$10^{-4}$"), (1e-05, "$10^{-5}$")):
+        g = lambda T2, mode: R[f"T2={T2}, prior={mode}, p_out={p:g}"]; c = lambda T2, mode: f"{g(T2, mode)['T_id*sig_id mean']:.1f}"
+        tri = lambda T2, mode: f"{c(T2, mode)} & {fr(g(T2, mode)['frac |err|>3 sig_id'])} & {fr(g(T2, mode)['frac |err|>4 sig_id'])}"
+        out.append(f"{lab} & {tri('inf', 'flat')} & {tri('inf', 'learned')} & {c('inf', 'exact')} & {c('300.0', 'flat')} & {c('300.0', 'learned')}\\\\")
+    return "\n".join(out)
+
+
+def table_miscal():
+    R = json.load(open("../results/stage9_cost.json")); out = []; fr = lambda x: "0" if x == 0 else e(x)
+    labs = {"calibrated, T2=300": r"$T_2=300$, matched", "T2 300 -> 100": r"$T_2$: $300\to100$", "calibrated, no dephasing": r"no dephasing, matched",
+            "p_d 0.02 -> 0.10": r"$p_d$: $0.02\to0.10$", "p_d 0.02 -> 0.20": r"$p_d$: $0.02\to0.20$", "T2 inf -> 1000": r"$T_2$: $\infty\to1000$"}
+    for k, lab in labs.items():
+        g = lambda p: R[f"miscalibration: {k}, p_out={p:g}"]
+        out.append(f"{lab} & {fr(g(1e-3)['frac |err|>3 sig_id'])} & {fr(g(1e-3)['frac |err|>4 sig_id'])} & {fr(g(1e-4)['frac |err|>3 sig_id'])} & {fr(g(1e-4)['frac |err|>4 sig_id'])}\\\\")
+    return "\n".join(out)
+
+
+def fig2():
+    """Detection probability of a planted component versus the expected count S*w: mixture and projective (stage 8),
+    sequential (stage 9), and the binomial law P[N >= 4]."""
+    import matplotlib; matplotlib.use("Agg"); import matplotlib.pyplot as plt
+    from scipy.stats import poisson
+    old = json.load(open("../results/stage8_detection.json")); new = load("stage9_detect"); fl = json.load(open("../results/stage8_floors.json"))
+    ink, mute = "#0b0b0b", "#52514e"; col = {"mix": "#eb6834", "pro": "#1baf7a", "seq": "#2a78d6"}
+    fig, ax = plt.subplots(1, 2, figsize=(7.0, 2.9), sharey=True)
+    for k, place in enumerate(("far", "adjacent")):
+        a = ax[k]; floor = list(fl.values())[k] if isinstance(fl, dict) else fl[k]
+        xs = np.logspace(-0.2, 4.1, 200); a.plot(xs, poisson.sf(3, xs), color=mute, lw=1.2, zorder=1, label=r"binomial law $P[N\geq4]$")
+        o = old[place]                                                # stage 8 also has w = 0.1 (above the floor)
+        a.plot([0.86 * r["w"] * r["S"] for r in o], [r["P_detect mixture"] for r in o], "o", ms=5.5, color=col["mix"], mec="white", mew=0.8, zorder=3, label="mixture (QMEGS-type)")
+        above = [r for r in o if r["w"] >= floor]; below = [r for r in o if r["w"] < floor]
+        a.plot([r["w"] * r["S"] for r in above], [r["P_detect projective"] for r in above], "s", ms=5.5, color=col["pro"], mec="white", mew=0.8, zorder=3, label="projective (5-bit register)")
+        a.plot([r["w"] * r["S"] for r in below], [r["P_detect projective"] for r in below], "s", ms=5.5, mfc="none", mec=col["pro"], mew=1.3, zorder=3, label="projective, below leakage floor")
+        a.plot([1.16 * r["S_w"] for r in new[place]], [r["P_detect"] for r in new[place]], "^", ms=6, color=col["seq"], mec="white", mew=0.8, zorder=4, label="sequential (single copy)")
+        a.set_xscale("log"); a.set_xlabel(r"expected count $S\,w$", color=ink); a.set_ylim(-0.06, 1.08); a.grid(alpha=0.25, lw=0.6)
+        a.set_title(("far from" if place == "far" else "adjacent to") + " the strong component", fontsize=9, color=ink)
+        for sp in ("top", "right"): a.spines[sp].set_visible(False)
+        a.tick_params(colors=mute, labelsize=8)
+    ax[0].set_ylabel("detection probability", color=ink); ax[1].legend(fontsize=6.5, frameon=False, loc="center right")
+    fig.tight_layout(); fig.savefig("figs/fig2_detection.png", dpi=220)
+
+
+def table_poly():
+    """Degree table from the forty learning runs of stage 6: runs reaching the target, the degree that at least half of
+    the runs reach (-- if fewer than half do), and the median subnormalisation of the reaching runs."""
+    R6 = json.load(open("../results/stage6_results.json")); out = []
+    def cell(st, t):
+        d = st[f"deg F>={t}"]; k = sum(x is not None for x in d); n_ = len(d); srt = sorted(x if x is not None else 10**6 for x in d); half = srt[(n_ + 1) // 2 - 1]
+        taus = [x for x in st[f"tau F>={t}"] if x is not None]
+        return f"{k}/{n_}: " + (f"{half} ({np.median(taus):.2f})" if half < 10**6 else "--")
+    dd = lambda x: "--" if x is None else str(x)
+    for key, lab, kap in (NAMES[2], NAMES[1], NAMES[3], NAMES[0]):
+        r = R6[key]; st = r["seed study"]; iv = r["interval odd LP (standard)"]
+        out.append(f"{lab} & {kap} & {cell(st['spectral correction'], 0.999)} & {cell(st['spectral correction'], 0.9999)} & {cell(st['node LP'], 0.999)} & {cell(st['node LP'], 0.9999)} & {dd(iv['deg F>=0.999'])} / {dd(iv['deg F>=0.9999'])}\\\\")
+    return "\n".join(out)
+
+
+def table_grid():
+    """Learning stages on the power-flow problems (stage 10): baselines at 1e4 shots, then the equal-time pair."""
+    cases = ("case9", "case14", "case30"); M = {c: json.load(open(f"../results/stage10_methods.{c}.json")) for c in cases}
+    C = {c: json.load(open(f"../results/stage10_compare.{c}.json"))["6-bit clock"] for c in cases}; keys = ("T2=inf", "T2=300.0"); out = []
+    rows = (("Bayesian clock (mixture)", "Bayesian clock (mixture)"), ("QMEGS-type (mixture)", "QMEGS-type (mixture)"), ("MM-QCELS (mixture)", "MM-QCELS-type (mixture)"),
+            ("QPE histogram, 6 bits", "QPE 6 bits"), ("QPE histogram, 8 bits", "QPE 8 bits"), ("QPE histogram, 10 bits", "QPE 10 bits"))
+    for m, lab in rows: out.append(lab + " & " + " & ".join(e(M[c][k][m]["1-F"]) if m in M[c][k] else "--" for c in cases for k in keys) + "\\\\")
+    out.append("\\midrule")
+    pick = lambda r, pref: [x for x in r if x.startswith(pref)]
+    out.append("Projective HHL & " + " & ".join(e(C[c][k][pick(C[c][k], "projective (")[0]]["1-F"]) for c in cases for k in keys) + "\\\\")
+    seq = lambda c, k: pick(C[c][k], "sequential (budget x1.0, delta=0.001")
+    out.append("Recycled sequential HHL, register resolution & " + " & ".join(e(C[c][k][seq(c, k)[0]]["1-F"]) for c in cases for k in keys) + "\\\\")
+    out.append("Recycled sequential HHL, finest resolution & " + " & ".join((e(C[c][k][seq(c, k)[-1]]["1-F"]) if len(seq(c, k)) > 1 else "same") for c in cases for k in keys) + "\\\\")
+    return "\n".join(out)
+
+
+SERIES = (("narma2", "NARMA2"), ("mackey-glass", "Mackey--Glass"), ("lorenz", "Lorenz"))
+
+
+def table_vqls():
+    """Variational solver (stage 12) on the systems of Tables I, XI and XII and on the 118-bus system: exact cost, then
+    stochastic optimisation within 1e4 and 1e7 executions."""
+    out = []
+    for key, lab in [(k, lab) for k, lab, _ in NAMES] + [(f"case{n}", f"{n}-bus") for n in (9, 14, 30, 118)] + [(k, lab + " readout") for k, lab in SERIES]:
+        v = json.load(open(f"../results/stage12_vqls.{key.replace(' ', '_')}.json")); x = v["exact cost"]; c = lambda b: e(v[f"{b} executions"]["1-F"]) if "1-F" in v[f"{b} executions"] else "--"
+        out.append(f"{lab} & {v['qubits']} & {int(x['terms'])} & {'$<$1e-9' if x['1-F'] < 1e-9 else e(x['1-F'])} & {e(x['executions'])} & {c(10000)} & {c(10000000)}\\\\")
+    return "\n".join(out)
+
+
+def table_series():
+    """Learning stages on the ridge systems of stage 11 within ten times the time of 1e4 projective shots: median 1-F and
+    the number of the ten runs whose forecasts differ from those of the exact ridge readout by less than 1e-3."""
+    F = json.load(open("../results/stage11_forecast.json")); out = []
+    def cell(c, k, pick):
+        r = [v for n, v in F[c].items() if isinstance(v, dict) and n.startswith(k + ", ") and n.endswith("x10 time") and pick(n)]
+        if not r: return "--"
+        assert len(r) == 1 and len(r[0]["dev_runs"]) == 10; return f"{e(r[0]['1-F'])} ({sum(d < 1e-3 for d in r[0]['dev_runs'])})"
+    rows = [(lab, lambda n, m=m: m in n) for m, lab in (("Bayesian clock", "Bayesian clock (mixture)"), ("QMEGS", "QMEGS-type (mixture)"), ("MM-QCELS", "MM-QCELS-type (mixture)"),
+                                                        ("6 bits", "QPE 6 bits"), ("8 bits", "QPE 8 bits"), ("10 bits", "QPE 10 bits"), ("projective", "Projective HHL"))]
+    rows += [(r"Recycled sequential HHL, $\sigma_{\rm id}=0.005$", lambda n: "sequential" in n and "sig_id=0.00500" in n), ("Recycled sequential HHL, finest resolution", lambda n: "sequential" in n and "sig_id=0.00500" not in n)]
+    for lab, pick in rows:
+        if lab == "Projective HHL": out.append("\\midrule")
+        out.append(lab + " & " + " & ".join(cell(c, k, pick) for c, _ in SERIES for k in ("T2=inf", "T2=300.0")) + "\\\\")
+    return "\n".join(out)
+
+
+def table_nisq():
+    """Forecast NMSE of the baselines without phase estimation (stage 12) on the three series."""
+    J = {(m, c): json.load(open(f"../results/stage12_{m}.{c}.json")) for m in ("vqls", "qrc", "qcl", "dqi") for c, _ in SERIES}; F = json.load(open("../results/stage11_forecast.json"))
+    rows = [("Ridge readout, exact", lambda c: F[c]["ridge at this kappa"]), ("Last known value", lambda c: F[c]["persistence"]),
+            ("Variational solver, exact", lambda c: J["vqls", c]["exact cost"]["NMSE"]), ("Variational solver, $10^5$", lambda c: J["vqls", c]["100000 executions"]["NMSE"]),
+            ("Variational solver, $10^7$", lambda c: J["vqls", c]["10000000 executions"]["NMSE"]),
+            ("Quantum reservoir, exact", lambda c: J["qrc", c]["exact expectation values"]["NMSE"]), ("Quantum reservoir, $10^5$", lambda c: J["qrc", c]["100000 executions"]["NMSE"]),
+            ("Circuit learning, exact", lambda c: J["qcl", c]["exact expectation values"]["NMSE"]), ("Circuit learning, $10^5$", lambda c: J["qcl", c]["100000 executions"]["NMSE"]),
+            ("DQI, $r=5$, $10^5$", lambda c: J["dqi", c]["sets of 5"]["100000 executions"]["NMSE"]), ("DQI, $r=15$, $10^5$", lambda c: J["dqi", c]["sets of 15"]["100000 executions"]["NMSE"])]
+    return "\n".join(lab + " & " + " & ".join(e(g(c)) for c, _ in SERIES) + "\\\\" + ("\n\\midrule" if lab == "Last known value" else "") for lab, g in rows)
+
+
+def splice(tex, label, body):
+    i = tex.index(r"\label{" + label + "}"); t_end = tex.index(r"\end{tabular}", i); h = tex.index(r"\midrule", i, t_end) + len(r"\midrule")
+    b = tex.find(r"\bottomrule", h, t_end); e = b if b >= 0 else t_end           # body = between the header rule and the bottom rule
+    return tex[:h] + "\n" + body + "\n" + tex[e:]
+
+
+if __name__ == "__main__":
+    tex = open("main.tex").read()
+    tex = splice(tex, "tab:learn", table1()); tex = splice(tex, "tab:clock", table2()); tex = splice(tex, "tab:qoi", table4())
+    tex = splice(tex, "tab:matched", table_matched()); tex = splice(tex, "tab:matchedC", table_matchedC()); tex = splice(tex, "tab:qoiseq", table_qoiseq())
+    tex = splice(tex, "tab:window", table_window()); tex = splice(tex, "tab:cost", table_cost()); tex = splice(tex, "tab:miscal", table_miscal()); tex = splice(tex, "tab:poly", table_poly()); tex = splice(tex, "tab:grid", table_grid()); tex = splice(tex, "tab:vqls", table_vqls()); tex = splice(tex, "tab:series", table_series()); tex = splice(tex, "tab:nisq", table_nisq())
+    open("main.tex", "w").write(tex); fig2(); print("tables and Fig. 2 regenerated")

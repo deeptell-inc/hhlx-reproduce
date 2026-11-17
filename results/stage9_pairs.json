@@ -1,0 +1,12 @@
+{
+ "T2=inf": {
+  "pair separated": 10,
+  "runs": 10,
+  "max distance of a reported eigenvalue from the spectrum": 0.001732959460010397
+ },
+ "T2=300.0": {
+  "pair separated": 7,
+  "runs": 10,
+  "max distance of a reported eigenvalue from the spectrum": 0.004207317244163344
+ }
+}

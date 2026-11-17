@@ -1,0 +1,246 @@
+{
+ "far": [
+  {
+   "w": 0.001,
+   "S": 1000,
+   "w_sqrtS": 0.03162277660168379,
+   "sqrt_wS": 1.0,
+   "P_detect mixture": 0.16666666666666666,
+   "P_detect projective": 0.3333333333333333
+  },
+  {
+   "w": 0.001,
+   "S": 10000,
+   "w_sqrtS": 0.1,
+   "sqrt_wS": 3.1622776601683795,
+   "P_detect mixture": 0.0,
+   "P_detect projective": 0.16666666666666666
+  },
+  {
+   "w": 0.001,
+   "S": 100000,
+   "w_sqrtS": 0.31622776601683794,
+   "sqrt_wS": 10.0,
+   "P_detect mixture": 0.0,
+   "P_detect projective": 0.0
+  },
+  {
+   "w": 0.003,
+   "S": 1000,
+   "w_sqrtS": 0.09486832980505137,
+   "sqrt_wS": 1.7320508075688772,
+   "P_detect mixture": 0.0,
+   "P_detect projective": 0.3333333333333333
+  },
+  {
+   "w": 0.003,
+   "S": 10000,
+   "w_sqrtS": 0.3,
+   "sqrt_wS": 5.477225575051661,
+   "P_detect mixture": 0.0,
+   "P_detect projective": 0.5833333333333334
+  },
+  {
+   "w": 0.003,
+   "S": 100000,
+   "w_sqrtS": 0.9486832980505139,
+   "sqrt_wS": 17.320508075688775,
+   "P_detect mixture": 0.0,
+   "P_detect projective": 0.8333333333333334
+  },
+  {
+   "w": 0.01,
+   "S": 1000,
+   "w_sqrtS": 0.31622776601683794,
+   "sqrt_wS": 3.1622776601683795,
+   "P_detect mixture": 0.16666666666666666,
+   "P_detect projective": 0.5833333333333334
+  },
+  {
+   "w": 0.01,
+   "S": 10000,
+   "w_sqrtS": 1.0,
+   "sqrt_wS": 10.0,
+   "P_detect mixture": 0.16666666666666666,
+   "P_detect projective": 1.0
+  },
+  {
+   "w": 0.01,
+   "S": 100000,
+   "w_sqrtS": 3.1622776601683795,
+   "sqrt_wS": 31.622776601683793,
+   "P_detect mixture": 0.08333333333333333,
+   "P_detect projective": 1.0
+  },
+  {
+   "w": 0.03,
+   "S": 1000,
+   "w_sqrtS": 0.9486832980505138,
+   "sqrt_wS": 5.477225575051661,
+   "P_detect mixture": 0.3333333333333333,
+   "P_detect projective": 1.0
+  },
+  {
+   "w": 0.03,
+   "S": 10000,
+   "w_sqrtS": 3.0,
+   "sqrt_wS": 17.320508075688775,
+   "P_detect mixture": 0.25,
+   "P_detect projective": 1.0
+  },
+  {
+   "w": 0.03,
+   "S": 100000,
+   "w_sqrtS": 9.486832980505138,
+   "sqrt_wS": 54.772255750516614,
+   "P_detect mixture": 1.0,
+   "P_detect projective": 1.0
+  },
+  {
+   "w": 0.1,
+   "S": 1000,
+   "w_sqrtS": 3.1622776601683795,
+   "sqrt_wS": 10.0,
+   "P_detect mixture": 0.4166666666666667,
+   "P_detect projective": 1.0
+  },
+  {
+   "w": 0.1,
+   "S": 10000,
+   "w_sqrtS": 10.0,
+   "sqrt_wS": 31.622776601683793,
+   "P_detect mixture": 1.0,
+   "P_detect projective": 1.0
+  },
+  {
+   "w": 0.1,
+   "S": 100000,
+   "w_sqrtS": 31.622776601683796,
+   "sqrt_wS": 100.0,
+   "P_detect mixture": 1.0,
+   "P_detect projective": 1.0
+  }
+ ],
+ "adjacent": [
+  {
+   "w": 0.001,
+   "S": 1000,
+   "w_sqrtS": 0.03162277660168379,
+   "sqrt_wS": 1.0,
+   "P_detect mixture": 0.08333333333333333,
+   "P_detect projective": 0.4166666666666667
+  },
+  {
+   "w": 0.001,
+   "S": 10000,
+   "w_sqrtS": 0.1,
+   "sqrt_wS": 3.1622776601683795,
+   "P_detect mixture": 0.0,
+   "P_detect projective": 0.8333333333333334
+  },
+  {
+   "w": 0.001,
+   "S": 100000,
+   "w_sqrtS": 0.31622776601683794,
+   "sqrt_wS": 10.0,
+   "P_detect mixture": 0.0,
+   "P_detect projective": 0.8333333333333334
+  },
+  {
+   "w": 0.003,
+   "S": 1000,
+   "w_sqrtS": 0.09486832980505137,
+   "sqrt_wS": 1.7320508075688772,
+   "P_detect mixture": 0.0,
+   "P_detect projective": 0.5833333333333334
+  },
+  {
+   "w": 0.003,
+   "S": 10000,
+   "w_sqrtS": 0.3,
+   "sqrt_wS": 5.477225575051661,
+   "P_detect mixture": 0.0,
+   "P_detect projective": 0.9166666666666666
+  },
+  {
+   "w": 0.003,
+   "S": 100000,
+   "w_sqrtS": 0.9486832980505139,
+   "sqrt_wS": 17.320508075688775,
+   "P_detect mixture": 0.0,
+   "P_detect projective": 1.0
+  },
+  {
+   "w": 0.01,
+   "S": 1000,
+   "w_sqrtS": 0.31622776601683794,
+   "sqrt_wS": 3.1622776601683795,
+   "P_detect mixture": 0.08333333333333333,
+   "P_detect projective": 0.9166666666666666
+  },
+  {
+   "w": 0.01,
+   "S": 10000,
+   "w_sqrtS": 1.0,
+   "sqrt_wS": 10.0,
+   "P_detect mixture": 0.08333333333333333,
+   "P_detect projective": 1.0
+  },
+  {
+   "w": 0.01,
+   "S": 100000,
+   "w_sqrtS": 3.1622776601683795,
+   "sqrt_wS": 31.622776601683793,
+   "P_detect mixture": 0.08333333333333333,
+   "P_detect projective": 1.0
+  },
+  {
+   "w": 0.03,
+   "S": 1000,
+   "w_sqrtS": 0.9486832980505138,
+   "sqrt_wS": 5.477225575051661,
+   "P_detect mixture": 0.16666666666666666,
+   "P_detect projective": 1.0
+  },
+  {
+   "w": 0.03,
+   "S": 10000,
+   "w_sqrtS": 3.0,
+   "sqrt_wS": 17.320508075688775,
+   "P_detect mixture": 0.08333333333333333,
+   "P_detect projective": 1.0
+  },
+  {
+   "w": 0.03,
+   "S": 100000,
+   "w_sqrtS": 9.486832980505138,
+   "sqrt_wS": 54.772255750516614,
+   "P_detect mixture": 1.0,
+   "P_detect projective": 1.0
+  },
+  {
+   "w": 0.1,
+   "S": 1000,
+   "w_sqrtS": 3.1622776601683795,
+   "sqrt_wS": 10.0,
+   "P_detect mixture": 0.16666666666666666,
+   "P_detect projective": 1.0
+  },
+  {
+   "w": 0.1,
+   "S": 10000,
+   "w_sqrtS": 10.0,
+   "sqrt_wS": 31.622776601683793,
+   "P_detect mixture": 1.0,
+   "P_detect projective": 1.0
+  },
+  {
+   "w": 0.1,
+   "S": 100000,
+   "w_sqrtS": 31.622776601683796,
+   "sqrt_wS": 100.0,
+   "P_detect mixture": 1.0,
+   "P_detect projective": 1.0
+  }
+ ]
+}

@@ -1,0 +1,674 @@
+{
+ "P3 Poisson N=8": {
+  "kappa": 32.16343747752636,
+  "m": 8,
+  "markov lower bound sqrt(kappa/2)": 4.010201832671664,
+  "learned max rel err": 0.2780024862929989,
+  "degree for F>=0.999": {
+   "node-aware (learned)": null,
+   "node-aware (true)": 18,
+   "interval (standard)": null
+  },
+  "degree for F>=0.9999": {
+   "node-aware (learned)": null,
+   "node-aware (true)": 18,
+   "interval (standard)": null
+  },
+  "F vs degree": {
+   "2": {
+    "node-aware (learned)": 0.31478,
+    "node-aware (true)": 0.31483,
+    "interval": 0.35087
+   },
+   "4": {
+    "node-aware (learned)": 0.30905,
+    "node-aware (true)": 0.07752,
+    "interval": 0.2459
+   },
+   "6": {
+    "node-aware (learned)": 0.15624,
+    "node-aware (true)": 0.15623,
+    "interval": 0.39614
+   },
+   "8": {
+    "node-aware (learned)": 0.18117,
+    "node-aware (true)": 0.18108,
+    "interval": 0.51626
+   },
+   "10": {
+    "node-aware (learned)": 0.74821,
+    "node-aware (true)": 0.95342,
+    "interval": 0.36435
+   },
+   "12": {
+    "node-aware (learned)": 0.58043,
+    "node-aware (true)": 0.95768,
+    "interval": 0.731
+   },
+   "14": {
+    "node-aware (learned)": 0.93862,
+    "node-aware (true)": 0.95557,
+    "interval": 0.56212
+   },
+   "16": {
+    "node-aware (learned)": 0.41732,
+    "node-aware (true)": 0.98776,
+    "interval": 0.80436
+   },
+   "18": {
+    "node-aware (learned)": 0.38692,
+    "node-aware (true)": 1.0,
+    "interval": 0.71501
+   },
+   "20": {
+    "node-aware (learned)": 0.35402,
+    "node-aware (true)": 1.0,
+    "interval": 0.72967
+   },
+   "22": {
+    "node-aware (learned)": 0.33067,
+    "node-aware (true)": 1.0,
+    "interval": 0.82674
+   },
+   "24": {
+    "node-aware (learned)": 0.30717,
+    "node-aware (true)": 1.0,
+    "interval": 0.72114
+   },
+   "26": {
+    "node-aware (learned)": 0.33957,
+    "node-aware (true)": 1.0,
+    "interval": 0.90807
+   },
+   "28": {
+    "node-aware (learned)": 0.38305,
+    "node-aware (true)": 1.0,
+    "interval": 0.81159
+   },
+   "30": {
+    "node-aware (learned)": 0.99146,
+    "node-aware (true)": 1.0,
+    "interval": 0.9178
+   },
+   "32": {
+    "node-aware (learned)": 0.78012,
+    "node-aware (true)": 1.0,
+    "interval": 0.86011
+   },
+   "34": {
+    "node-aware (learned)": 0.90409,
+    "node-aware (true)": 1.0,
+    "interval": 0.84305
+   },
+   "36": {
+    "node-aware (learned)": 0.90409,
+    "node-aware (true)": 1.0,
+    "interval": 0.92403
+   },
+   "38": {
+    "node-aware (learned)": 0.90409,
+    "node-aware (true)": 1.0,
+    "interval": 0.8615
+   },
+   "40": {
+    "node-aware (learned)": 0.67736,
+    "node-aware (true)": 1.0,
+    "interval": 0.95741
+   },
+   "42": {
+    "node-aware (learned)": 0.68012,
+    "node-aware (true)": 1.0,
+    "interval": 0.89521
+   },
+   "44": {
+    "node-aware (learned)": 0.82678,
+    "node-aware (true)": 1.0,
+    "interval": 0.95455
+   },
+   "46": {
+    "node-aware (learned)": 0.82678,
+    "node-aware (true)": 1.0,
+    "interval": 0.91819
+   },
+   "48": {
+    "node-aware (learned)": 0.82678,
+    "node-aware (true)": 1.0,
+    "interval": 0.91782
+   },
+   "50": {
+    "node-aware (learned)": 0.8772,
+    "node-aware (true)": 1.0,
+    "interval": 0.96237
+   },
+   "52": {
+    "node-aware (learned)": 0.91764,
+    "node-aware (true)": 1.0,
+    "interval": 0.92989
+   },
+   "54": {
+    "node-aware (learned)": 0.91764,
+    "node-aware (true)": 1.0,
+    "interval": 0.97444
+   },
+   "56": {
+    "node-aware (learned)": 0.86848,
+    "node-aware (true)": 1.0,
+    "interval": 0.92875
+   },
+   "58": {
+    "node-aware (learned)": 0.42349,
+    "node-aware (true)": 1.0,
+    "interval": 0.97606
+   },
+   "60": {
+    "node-aware (learned)": 0.96647,
+    "node-aware (true)": 1.0,
+    "interval": 0.95134
+   }
+  }
+ },
+ "P3 Poisson N=4": {
+  "kappa": 9.472135954999576,
+  "m": 4,
+  "markov lower bound sqrt(kappa/2)": 2.176250899482821,
+  "learned max rel err": 0.0006896586992320665,
+  "degree for F>=0.999": {
+   "node-aware (learned)": 6,
+   "node-aware (true)": 6,
+   "interval (standard)": 42
+  },
+  "degree for F>=0.9999": {
+   "node-aware (learned)": 6,
+   "node-aware (true)": 6,
+   "interval (standard)": null
+  },
+  "F vs degree": {
+   "2": {
+    "node-aware (learned)": 0.72857,
+    "node-aware (true)": 0.72862,
+    "interval": 0.82659
+   },
+   "4": {
+    "node-aware (learned)": 0.05397,
+    "node-aware (true)": 0.05444,
+    "interval": 0.80608
+   },
+   "6": {
+    "node-aware (learned)": 1.0,
+    "node-aware (true)": 1.0,
+    "interval": 0.98977
+   },
+   "8": {
+    "node-aware (learned)": 1.0,
+    "node-aware (true)": 1.0,
+    "interval": 0.88892
+   },
+   "10": {
+    "node-aware (learned)": 0.99999,
+    "node-aware (true)": 1.0,
+    "interval": 0.97272
+   },
+   "12": {
+    "node-aware (learned)": 0.99999,
+    "node-aware (true)": 1.0,
+    "interval": 0.97178
+   },
+   "14": {
+    "node-aware (learned)": 0.99998,
+    "node-aware (true)": 1.0,
+    "interval": 0.99631
+   },
+   "16": {
+    "node-aware (learned)": 0.99997,
+    "node-aware (true)": 1.0,
+    "interval": 0.98148
+   },
+   "18": {
+    "node-aware (learned)": 0.99998,
+    "node-aware (true)": 1.0,
+    "interval": 0.98577
+   },
+   "20": {
+    "node-aware (learned)": 0.99997,
+    "node-aware (true)": 1.0,
+    "interval": 0.98096
+   },
+   "22": {
+    "node-aware (learned)": 0.9999,
+    "node-aware (true)": 1.0,
+    "interval": 0.9975
+   },
+   "24": {
+    "node-aware (learned)": 0.99982,
+    "node-aware (true)": 1.0,
+    "interval": 0.99099
+   },
+   "26": {
+    "node-aware (learned)": 0.99971,
+    "node-aware (true)": 1.0,
+    "interval": 0.99773
+   },
+   "28": {
+    "node-aware (learned)": 0.99971,
+    "node-aware (true)": 1.0,
+    "interval": 0.99524
+   },
+   "30": {
+    "node-aware (learned)": 0.99974,
+    "node-aware (true)": 1.0,
+    "interval": 0.99897
+   },
+   "32": {
+    "node-aware (learned)": 0.9996,
+    "node-aware (true)": 1.0,
+    "interval": 0.99623
+   },
+   "34": {
+    "node-aware (learned)": 0.99882,
+    "node-aware (true)": 1.0,
+    "interval": 0.99764
+   },
+   "36": {
+    "node-aware (learned)": 0.99994,
+    "node-aware (true)": 1.0,
+    "interval": 0.99407
+   },
+   "38": {
+    "node-aware (learned)": 0.99982,
+    "node-aware (true)": 1.0,
+    "interval": 0.998
+   },
+   "40": {
+    "node-aware (learned)": 0.99997,
+    "node-aware (true)": 1.0,
+    "interval": 0.99776
+   },
+   "42": {
+    "node-aware (learned)": 0.99997,
+    "node-aware (true)": 1.0,
+    "interval": 0.99983
+   },
+   "44": {
+    "node-aware (learned)": 0.99993,
+    "node-aware (true)": 1.0,
+    "interval": 0.99856
+   },
+   "46": {
+    "node-aware (learned)": 0.99996,
+    "node-aware (true)": 1.0,
+    "interval": 0.99918
+   },
+   "48": {
+    "node-aware (learned)": 1.0,
+    "node-aware (true)": 1.0,
+    "interval": 0.99806
+   },
+   "50": {
+    "node-aware (learned)": 0.99997,
+    "node-aware (true)": 1.0,
+    "interval": 0.99982
+   },
+   "52": {
+    "node-aware (learned)": 0.99997,
+    "node-aware (true)": 1.0,
+    "interval": 0.9982
+   },
+   "54": {
+    "node-aware (learned)": 0.99982,
+    "node-aware (true)": 1.0,
+    "interval": 0.99889
+   },
+   "56": {
+    "node-aware (learned)": 0.99482,
+    "node-aware (true)": 1.0,
+    "interval": 0.99869
+   },
+   "58": {
+    "node-aware (learned)": 0.99979,
+    "node-aware (true)": 1.0,
+    "interval": 0.9997
+   },
+   "60": {
+    "node-aware (learned)": 0.99994,
+    "node-aware (true)": 1.0,
+    "interval": 0.99948
+   }
+  }
+ },
+ "P4 Toeplitz N=8": {
+  "kappa": 4.028834507207809,
+  "m": 8,
+  "markov lower bound sqrt(kappa/2)": 1.4193016781515846,
+  "learned max rel err": 0.42348445525111206,
+  "degree for F>=0.999": {
+   "node-aware (learned)": 10,
+   "node-aware (true)": 8,
+   "interval (standard)": 12
+  },
+  "degree for F>=0.9999": {
+   "node-aware (learned)": null,
+   "node-aware (true)": 14,
+   "interval (standard)": 30
+  },
+  "F vs degree": {
+   "2": {
+    "node-aware (learned)": 0.9674,
+    "node-aware (true)": 0.97119,
+    "interval": 0.96064
+   },
+   "4": {
+    "node-aware (learned)": 0.98481,
+    "node-aware (true)": 0.98171,
+    "interval": 0.99247
+   },
+   "6": {
+    "node-aware (learned)": 0.98984,
+    "node-aware (true)": 0.98775,
+    "interval": 0.98652
+   },
+   "8": {
+    "node-aware (learned)": 0.98794,
+    "node-aware (true)": 0.99933,
+    "interval": 0.99262
+   },
+   "10": {
+    "node-aware (learned)": 0.99945,
+    "node-aware (true)": 0.99948,
+    "interval": 0.99646
+   },
+   "12": {
+    "node-aware (learned)": 0.98938,
+    "node-aware (true)": 0.99973,
+    "interval": 0.9996
+   },
+   "14": {
+    "node-aware (learned)": 0.9962,
+    "node-aware (true)": 1.0,
+    "interval": 0.99952
+   },
+   "16": {
+    "node-aware (learned)": 0.98954,
+    "node-aware (true)": 1.0,
+    "interval": 0.99838
+   },
+   "18": {
+    "node-aware (learned)": 0.9962,
+    "node-aware (true)": 1.0,
+    "interval": 0.99901
+   },
+   "20": {
+    "node-aware (learned)": 0.98954,
+    "node-aware (true)": 1.0,
+    "interval": 0.99945
+   },
+   "22": {
+    "node-aware (learned)": 0.9962,
+    "node-aware (true)": 1.0,
+    "interval": 0.9998
+   },
+   "24": {
+    "node-aware (learned)": 0.9962,
+    "node-aware (true)": 1.0,
+    "interval": 0.99947
+   },
+   "26": {
+    "node-aware (learned)": 0.98953,
+    "node-aware (true)": 1.0,
+    "interval": 0.99957
+   },
+   "28": {
+    "node-aware (learned)": 0.9962,
+    "node-aware (true)": 1.0,
+    "interval": 0.99964
+   },
+   "30": {
+    "node-aware (learned)": 0.98953,
+    "node-aware (true)": 1.0,
+    "interval": 0.9999
+   },
+   "32": {
+    "node-aware (learned)": 0.9962,
+    "node-aware (true)": 1.0,
+    "interval": 0.99984
+   },
+   "34": {
+    "node-aware (learned)": 0.9962,
+    "node-aware (true)": 1.0,
+    "interval": 0.99962
+   },
+   "36": {
+    "node-aware (learned)": 0.98954,
+    "node-aware (true)": 1.0,
+    "interval": 0.99992
+   },
+   "38": {
+    "node-aware (learned)": 0.9962,
+    "node-aware (true)": 1.0,
+    "interval": 0.9999
+   },
+   "40": {
+    "node-aware (learned)": 0.98953,
+    "node-aware (true)": 1.0,
+    "interval": 0.9999
+   },
+   "42": {
+    "node-aware (learned)": 0.9981,
+    "node-aware (true)": 1.0,
+    "interval": 0.99988
+   },
+   "44": {
+    "node-aware (learned)": 0.99621,
+    "node-aware (true)": 1.0,
+    "interval": 0.99992
+   },
+   "46": {
+    "node-aware (learned)": 0.98953,
+    "node-aware (true)": 1.0,
+    "interval": 0.99991
+   },
+   "48": {
+    "node-aware (learned)": 0.9962,
+    "node-aware (true)": 1.0,
+    "interval": 0.99996
+   },
+   "50": {
+    "node-aware (learned)": 0.98954,
+    "node-aware (true)": 1.0,
+    "interval": 0.99994
+   },
+   "52": {
+    "node-aware (learned)": 0.9962,
+    "node-aware (true)": 1.0,
+    "interval": 0.99986
+   },
+   "54": {
+    "node-aware (learned)": 0.99778,
+    "node-aware (true)": 1.0,
+    "interval": 0.99998
+   },
+   "56": {
+    "node-aware (learned)": 0.98954,
+    "node-aware (true)": 1.0,
+    "interval": 0.99994
+   },
+   "58": {
+    "node-aware (learned)": 0.9962,
+    "node-aware (true)": 1.0,
+    "interval": 0.99998
+   },
+   "60": {
+    "node-aware (learned)": 0.98951,
+    "node-aware (true)": 1.0,
+    "interval": 0.99993
+   }
+  }
+ },
+ "P5 random 4x4": {
+  "kappa": 2.203147458271803,
+  "m": 4,
+  "markov lower bound sqrt(kappa/2)": 1.0495588259530295,
+  "learned max rel err": 0.0001082539994887257,
+  "degree for F>=0.999": {
+   "node-aware (learned)": 4,
+   "node-aware (true)": 4,
+   "interval (standard)": 10
+  },
+  "degree for F>=0.9999": {
+   "node-aware (learned)": 8,
+   "node-aware (true)": 8,
+   "interval (standard)": 16
+  },
+  "F vs degree": {
+   "2": {
+    "node-aware (learned)": 0.98179,
+    "node-aware (true)": 0.98178,
+    "interval": 0.99139
+   },
+   "4": {
+    "node-aware (learned)": 0.99906,
+    "node-aware (true)": 0.99906,
+    "interval": 0.99866
+   },
+   "6": {
+    "node-aware (learned)": 0.99985,
+    "node-aware (true)": 0.99985,
+    "interval": 0.99797
+   },
+   "8": {
+    "node-aware (learned)": 1.0,
+    "node-aware (true)": 1.0,
+    "interval": 0.99852
+   },
+   "10": {
+    "node-aware (learned)": 1.0,
+    "node-aware (true)": 1.0,
+    "interval": 0.99934
+   },
+   "12": {
+    "node-aware (learned)": 1.0,
+    "node-aware (true)": 1.0,
+    "interval": 0.99973
+   },
+   "14": {
+    "node-aware (learned)": 1.0,
+    "node-aware (true)": 1.0,
+    "interval": 0.99951
+   },
+   "16": {
+    "node-aware (learned)": 1.0,
+    "node-aware (true)": 1.0,
+    "interval": 0.99991
+   },
+   "18": {
+    "node-aware (learned)": 1.0,
+    "node-aware (true)": 1.0,
+    "interval": 0.99985
+   },
+   "20": {
+    "node-aware (learned)": 1.0,
+    "node-aware (true)": 1.0,
+    "interval": 0.99989
+   },
+   "22": {
+    "node-aware (learned)": 1.0,
+    "node-aware (true)": 1.0,
+    "interval": 0.99991
+   },
+   "24": {
+    "node-aware (learned)": 1.0,
+    "node-aware (true)": 1.0,
+    "interval": 0.99993
+   },
+   "26": {
+    "node-aware (learned)": 1.0,
+    "node-aware (true)": 1.0,
+    "interval": 0.99996
+   },
+   "28": {
+    "node-aware (learned)": 1.0,
+    "node-aware (true)": 1.0,
+    "interval": 0.99997
+   },
+   "30": {
+    "node-aware (learned)": 1.0,
+    "node-aware (true)": 1.0,
+    "interval": 0.99999
+   },
+   "32": {
+    "node-aware (learned)": 1.0,
+    "node-aware (true)": 1.0,
+    "interval": 1.0
+   },
+   "34": {
+    "node-aware (learned)": 1.0,
+    "node-aware (true)": 1.0,
+    "interval": 0.99999
+   },
+   "36": {
+    "node-aware (learned)": 1.0,
+    "node-aware (true)": 1.0,
+    "interval": 0.99998
+   },
+   "38": {
+    "node-aware (learned)": 1.0,
+    "node-aware (true)": 1.0,
+    "interval": 0.99997
+   },
+   "40": {
+    "node-aware (learned)": 1.0,
+    "node-aware (true)": 1.0,
+    "interval": 0.99997
+   },
+   "42": {
+    "node-aware (learned)": 1.0,
+    "node-aware (true)": 1.0,
+    "interval": 0.99998
+   },
+   "44": {
+    "node-aware (learned)": 1.0,
+    "node-aware (true)": 1.0,
+    "interval": 0.99999
+   },
+   "46": {
+    "node-aware (learned)": 1.0,
+    "node-aware (true)": 1.0,
+    "interval": 0.99998
+   },
+   "48": {
+    "node-aware (learned)": 1.0,
+    "node-aware (true)": 1.0,
+    "interval": 0.99998
+   },
+   "50": {
+    "node-aware (learned)": 1.0,
+    "node-aware (true)": 1.0,
+    "interval": 1.0
+   },
+   "52": {
+    "node-aware (learned)": 1.0,
+    "node-aware (true)": 1.0,
+    "interval": 0.99999
+   },
+   "54": {
+    "node-aware (learned)": 1.0,
+    "node-aware (true)": 1.0,
+    "interval": 0.99998
+   },
+   "56": {
+    "node-aware (learned)": 1.0,
+    "node-aware (true)": 1.0,
+    "interval": 0.99999
+   },
+   "58": {
+    "node-aware (learned)": 1.0,
+    "node-aware (true)": 1.0,
+    "interval": 1.0
+   },
+   "60": {
+    "node-aware (learned)": 1.0,
+    "node-aware (true)": 1.0,
+    "interval": 0.99999
+   }
+  }
+ }
+}

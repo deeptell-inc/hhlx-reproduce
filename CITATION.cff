@@ -1,0 +1,12 @@
+cff-version: 1.2.0
+message: "If you use this code or these results, please cite the manuscript in paper/."
+title: "Detection-Limited Eigenvalue Learning for Hybrid Quantum Linear System Solvers: code and results"
+type: software
+license: MIT
+authors:
+  - family-names: Wakaura
+    given-names: Hikaru
+    affiliation: "QIRI (Quantum Integrated Research Institute Inc.)"
+  - family-names: Tanimae
+    given-names: Taiki
+    affiliation: "QIRI (Quantum Integrated Research Institute Inc.)"

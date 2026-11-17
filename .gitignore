@@ -1,0 +1,11 @@
+__pycache__/
+*.pyc
+.pytest_cache/
+paper/*.aux
+paper/*.bbl
+paper/*.blg
+paper/*.log
+paper/*.out
+results/*.log
+results/stage9_all_done.txt
+.DS_Store

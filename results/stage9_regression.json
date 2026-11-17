@@ -1,0 +1,58 @@
+{
+ "P3 Poisson N=8, T2=inf": {
+  "stored F_median": 0.9999974424715757,
+  "recomputed": 0.9999974424715757,
+  "stored F_min": 0.9999832241634732,
+  "recomputed min": 0.9999832241634732,
+  "identical": true
+ },
+ "P3 Poisson N=8, T2=300.0": {
+  "stored F_median": 0.9995598654491475,
+  "recomputed": 0.9995598654491475,
+  "stored F_min": 0.9240691139248929,
+  "recomputed min": 0.9240691139248929,
+  "identical": true
+ },
+ "P4 Toeplitz N=8, T2=inf": {
+  "stored F_median": 0.9999967731969892,
+  "recomputed": 0.9999967731969892,
+  "stored F_min": 0.9999949144514735,
+  "recomputed min": 0.9999949144514735,
+  "identical": true
+ },
+ "P4 Toeplitz N=8, T2=300.0": {
+  "stored F_median": 0.9996680832633272,
+  "recomputed": 0.9996680832633272,
+  "stored F_min": 0.999499100880956,
+  "recomputed min": 0.999499100880956,
+  "identical": true
+ },
+ "P3 Poisson N=4, T2=inf": {
+  "stored F_median": 0.9999999030700987,
+  "recomputed": 0.9999999030700987,
+  "stored F_min": 0.9999998938198061,
+  "recomputed min": 0.9999998938198061,
+  "identical": true
+ },
+ "P3 Poisson N=4, T2=300.0": {
+  "stored F_median": 0.9999908513995843,
+  "recomputed": 0.9999908513995843,
+  "stored F_min": 0.9999672732114363,
+  "recomputed min": 0.9999672732114363,
+  "identical": true
+ },
+ "P5 random 4x4, T2=inf": {
+  "stored F_median": 0.9999999998089981,
+  "recomputed": 0.9999999998089981,
+  "stored F_min": 0.9999999994605748,
+  "recomputed min": 0.9999999994605748,
+  "identical": true
+ },
+ "P5 random 4x4, T2=300.0": {
+  "stored F_median": 0.9999996132089889,
+  "recomputed": 0.9999996132089889,
+  "stored F_min": 0.9999884071912641,
+  "recomputed min": 0.9999884071912641,
+  "identical": true
+ }
+}
