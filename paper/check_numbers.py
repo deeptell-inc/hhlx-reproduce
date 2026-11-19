@@ -447,6 +447,45 @@ assert all(np.allclose(_b13(c_, b_, 10**5), V12[c_]["100000 executions"]["NMSE"]
 M13 = json.load(open("../results/stage13_manifest.json")); assert len(M13["code"]) == 3 and list(M13["results"]) == ["results/stage13_sweep.json"] and all(_sha(p_) == v["sha256"] for p_, v in list(M13["code"].items()) + list(M13["results"].items()))
 assert min(v["mtime"] for v in M13["results"].values()) > max(v["mtime"] for v in M13["code"].values())
 
+# --- Sec. X, Table XV (tab:system): the sequential estimator with a system register of finite lifetime (stage 14)
+S14 = json.load(open("../results/stage14_system.json")); _T14 = ("3e+06", "1e+06", "300000", "100000", "30000", "10000"); _sy = ("poisson8", "case9", "lorenz")
+_r14 = lambda s_, m_, t_: S14[s_]["T_sys=inf"] if t_ == "inf" else S14[s_][m_][f"T_sys={t_}"]; _i14 = {s_: S14[s_]["T_sys=inf"] for s_ in _sy}; _pc = lambda x: f"{100 * x:.1f}"
+assert all(len(_r14(s_, m_, t_)["runs"]["1-F"]) == 10 for s_ in _sy for m_ in ("redraw", "depolarising") for t_ in ("inf",) + _T14)
+# the runs without system noise are the stored runs of Tables XI and XII, and the redrawing runs on Poisson 8 those of stage 9
+assert np.allclose(_i14["case9"]["runs"]["1-F"], next(v for k, v in json.load(open("../results/stage10_compare.case9.json"))["6-bit clock"]["T2=inf"].items() if k.startswith("sequential (budget x1.0, delta=0.001"))["runs"]["1-F"], rtol=0, atol=1e-15)
+assert np.allclose(_i14["lorenz"]["runs"]["1-F"], json.load(open("../results/stage11_scale.lorenz.x10.json"))["sequential, sig_id=0.00030"]["runs"]["1-F"], rtol=0, atol=1e-15)
+assert all(abs(_r14("poisson8", "redraw", t_)["1-F"] - L[f"T_sys={float(t_)}"]["1-F"]) < 1e-15 for t_ in _T14[1:]) and abs(_i14["poisson8"]["1-F"] - L["T_sys=inf"]["1-F"]) < 1e-15
+# cost of a copy without system noise
+assert [round(_i14[s_]["n_id"] / _i14[s_]["copies"]) for s_ in _sy] == [23, 20, 21]; within([_i14[s_]["n_ref"] for s_ in _sy], 5e2, 1.05e3)
+for s_, q_, l_ in zip(_sy, (7.2e2, 7.1e2, 3.3e3), (3.3e4, 3.4e4, 1.2e5)): sig(S14[s_]["budget"] / _i14[s_]["copies"], q_); sig(_i14[s_]["T_copy_max"], l_)
+# eigenvalues, redrawing
+assert max(_r14(s_, "redraw", t_)["1-F"] / _i14[s_]["1-F"] for s_ in _sy for t_ in _T14[:3]) < 1.6
+sig(_r14("poisson8", "redraw", "30000")["1-F"], 5.0e-6); sig(_r14("poisson8", "redraw", "10000")["1-F"], 3.1e-5); sig(_r14("case9", "redraw", "10000")["1-F"], 8.4e-5); sig(_r14("case9", "redraw", "10000")["1-F_max"], 2.6e-4)
+_o9 = json.load(open("../results/stage10_methods.case9.json"))["T2=inf"]; within([_o9[k]["1-F"] for k in _o9 if "standard HHL" not in k] + [next(v for k, v in json.load(open("../results/stage10_compare.case9.json"))["6-bit clock"]["T2=inf"].items() if k.startswith("projective ("))["1-F"]], 0.185, 0.235)
+sig(_r14("lorenz", "redraw", "30000")["1-F"], 0.017); assert sum(m_ == 4 for m_ in _r14("lorenz", "redraw", "30000")["runs"]["m"]) == 6
+_w14 = [(_r14("lorenz", "redraw", t_)["1-F_max"], t_) for t_ in _T14]; sig(max(_w14)[0], 0.37); assert max(_w14)[1] == "10000"
+sig(3e4 / _i14["lorenz"]["T_copy_max"], 0.25); sig(3e4 / (S14["lorenz"]["budget"] / _i14["lorenz"]["copies"]), 9, 1)
+assert all(max(_r14(s_, "redraw", t_)["runs"]["false"]) == 0 for s_ in _sy for t_ in ("inf",) + _T14[:4])
+# eigenvalues, depolarising
+assert max(_r14(s_, "depolarising", t_)["1-F"] for s_ in _sy[:2] for t_ in _T14) < 1.4e-5
+sig(_r14("poisson8", "depolarising", "10000")["1-F_max"], 0.013); sig(_r14("case9", "depolarising", "10000")["1-F_max"], 8.1e-3); sig(_r14("case9", "depolarising", "100000")["1-F_max"], 5.1e-3)
+assert max(_r14(s_, "depolarising", t_)["1-F_max"] for s_ in _sy[:2] for t_ in _T14 if (s_, t_) not in (("poisson8", "10000"), ("case9", "10000"), ("case9", "100000"))) < 3e-5
+within([_r14("lorenz", "depolarising", t_)["1-F"] for t_ in _T14[1:4]], 1.45e-4, 1.75e-4); sig(_r14("lorenz", "depolarising", "30000")["1-F"], 4.2e-4); sig(_r14("lorenz", "depolarising", "10000")["1-F"], 1.8e-3)
+assert all(_r14(s_, "depolarising", t_)["1-F"] < _r14(s_, "redraw", t_)["1-F"] for s_ in _sy for t_ in _T14[4:])
+_d36 = sorted(_r14("lorenz", "depolarising", "3e+06")["runs"]["1-F"]); sig(_r14("lorenz", "depolarising", "3e+06")["1-F"], 1.4e-3); within(_d36[4:], 1.35e-3, 1.75e-3); within(_d36[:4], 2.35e-5, 2.55e-4)
+assert [_r14("lorenz", "depolarising", t_)["m"] for t_ in ("inf", "3e+06", "1e+06", "300000")] == [5, 5, 6, 6]     # the floor becomes a component of its own with more jumps
+assert [_r14("poisson8", "depolarising", t_)["m"] for t_ in _T14[4:]] == [8, 8] and _i14["poisson8"]["m"] == 7
+# weights
+sig(sum(S14["lorenz"]["weights"][:10]), 1.0e-7); assert len(S14["lorenz"]["weights"]) == 16 and S14["lorenz"]["weights"][10] > 1e3 * S14["lorenz"]["weights"][9]
+assert [_pc(_r14("lorenz", "depolarising", t_)["eC"]) for t_ in ("inf", "3e+06")] == ["0.5", "5.6"] and f"{100 * _r14('lorenz', 'depolarising', '300000')['eC']:.0f}" == "62" and all(_r14("lorenz", "depolarising", t_)["eC"] > 1 for t_ in _T14[3:])
+sig(S14["lorenz"]["budget"] / _i14["lorenz"]["copies"] / 3e6, 1e-3, 1)
+assert _pc(max(_r14("lorenz", "redraw", t_)["eC"] for t_ in _T14[:4])) == "1.7" and _pc(_r14("lorenz", "redraw", "10000")["eC"]) == "8.3"
+assert [_r14("lorenz", "depolarising", t_)["false"] for t_ in _T14[3:]] == [1, 4, 11] and all(max(_r14("lorenz", "depolarising", t_)["runs"]["false"]) == 0 for t_ in _T14[:3])
+assert max(_r14("case9", "depolarising", t_)["eC"] for t_ in _T14[:4]) < 0.01 and [_pc(_r14("case9", "depolarising", t_)["eC"]) for t_ in _T14[4:]] == ["3.3", "8.9"] and _pc(max(_r14("case9", "redraw", t_)["eC"] for t_ in _T14)) == "0.4"
+_e8 = [_r14("poisson8", m_, t_)["eC"] for m_ in ("redraw", "depolarising") for t_ in ("inf",) + _T14]; assert (_pc(min(_e8)), _pc(max(_e8)), _pc(_i14["poisson8"]["eC"])) == ("1.3", "5.6", "2.5")
+M14 = json.load(open("../results/stage14_manifest.json")); assert len(M14["code"]) == 4 and list(M14["results"]) == ["results/stage14_system.json"] and all(_sha(p_) == v["sha256"] for p_, v in list(M14["code"].items()) + list(M14["results"].items()))
+assert min(v["mtime"] for v in M14["results"].values()) > max(v["mtime"] for v in M14["code"].values())
+
 # --- provenance: the manifest matches the files, and every stage-9 result is newer than the code that produced it
 import hashlib
 MAN = json.load(open("../results/stage9_manifest.json")); sha = lambda p: hashlib.sha256(open(os.path.join("..", p), "rb").read()).hexdigest()

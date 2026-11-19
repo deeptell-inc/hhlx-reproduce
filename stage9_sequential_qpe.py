@@ -16,7 +16,8 @@ applies verbatim to each copy, and the copies are i.i.d. samples of the spectral
   refine   : the same copy continues at the frontier of its component's pooled posterior, only while that
              component is above its precision target (need-based allocation, <= n_ref measurements per copy).
 Noise: contrast c(t) = (1-p_d) exp(-t/T2) on every Ramsey measurement (same calibrated model as stages 2-8);
-optional system-lifetime check: the copy jumps to a fresh eigencomponent (j ~ w) at rate 1/T_sys.
+optional system-lifetime check: the copy jumps to a fresh eigencomponent at rate 1/T_sys, drawn with the weights w
+(a re-prepared input) or with w_jump when given (uniform over all eigenvectors: a depolarised register; stage 14).
 Costs reported: total evolution time, max single evolution time (ancilla coherence), max per-copy time
 (system lifetime), copies.   Output: results/stage9_*.json
 """
@@ -32,7 +33,7 @@ def contrast(t, T2):
     return (1 - PD) * (np.exp(-t / T2) if np.isfinite(T2) else np.ones_like(t))
 
 
-def identify(j, lams, w, T2, sig_id, t_cap, rng, eps=0.02, n_max=300, T_sys=np.inf, p_out=1e-4, prior=None, c_true=None):
+def identify(j, lams, w, T2, sig_id, t_cap, rng, eps=0.02, n_max=300, T_sys=np.inf, p_out=1e-4, prior=None, c_true=None, w_jump=None, count=None):
     """Vectorised over copies.  j: (B,) component each copy has collapsed to.  Returns per-copy posterior mean,
     converged flag, evolution time spent, and the (possibly jumped) component index.
     Design rule: with q_t = E_post[(lambda - mu) e^{i lambda t}] and z_t = E_post[e^{i lambda t}], a measurement at
@@ -43,7 +44,8 @@ def identify(j, lams, w, T2, sig_id, t_cap, rng, eps=0.02, n_max=300, T_sys=np.i
     or an informative prior it is the time and phase that split the surviving modes.  c_true (default: the assumed
     contrast) is the contrast the outcomes are sampled with, for miscalibration tests.
     Once sigma <= sig_id, residual far mass is removed by verification measurements (theta = -mu t, t maximising
-    the decay rate of the far mass)."""
+    the decay rate of the far mass).  w_jump: distribution of the component after a system jump (default w); count: a
+    one-element list to which the number of measurements made is added."""
     j = j.copy(); B = len(j); g = np.arange(sig_id / 10, LAM_HI, sig_id / 5)
     p0 = np.full(len(g), 1.0 / len(g))
     if prior is not None and len(prior[0]):                            # components found so far + flat mass u for the rest
@@ -70,9 +72,10 @@ def identify(j, lams, w, T2, sig_id, t_cap, rng, eps=0.02, n_max=300, T_sys=np.i
             kv = np.argmax(np.where(short, -np.log((1 + ck * r) / (1 + ck)) / tk, -np.inf), axis=1)   # far-mass decay rate
             ks[v] = kv; th[v] = -mu[i[v]] * tk[kv]                     # theta = -mu t: the core answers 0 with prob (1+c)/2
         t, c = tk[ks], ck[ks]
+        if count is not None: count[0] += len(i)
         if np.isfinite(T_sys):                                         # system error: lose the eigenstate
             jump = rng.uniform(size=len(i)) > np.exp(-t / T_sys)
-            j[i[jump]] = rng.choice(len(lams), size=int(jump.sum()), p=w)
+            j[i[jump]] = rng.choice(len(lams), size=int(jump.sum()), p=w if w_jump is None else w_jump)
         d = rng.uniform(size=len(i)) < 0.5 + 0.5 * ct[ks] * np.cos(lams[j[i]] * t + th)
         like = 0.5 + 0.5 * c[:, None] * np.real(E[ks] * np.exp(1j * th)[:, None])   # c already contains the tempering
         like = np.where(d[:, None], like, 1 - like)
@@ -137,7 +140,7 @@ def carry_over(old, lab_prev, lab, cen, sig_id, f_min=0.9):
     return post, kept, made
 
 
-def learn(lams, w, T2, budget, rng, sig_id, delta=1e-3, t_cap=None, n_ref=16, batch=500, T_sys=np.inf, u=0.05):
+def learn(lams, w, T2, budget, rng, sig_id, delta=1e-3, t_cap=None, n_ref=16, batch=500, T_sys=np.inf, u=0.05, w_jump=None, count=None):
     """Run copies one after another until the total evolution time reaches `budget` (never beyond: a copy that would
     not finish is not counted and its time is charged).  Returns learned eigenvalues, weights, stats.
     delta: relative precision target of every component (refinement stops there; 0 = refine on every copy); "auto"
@@ -154,7 +157,7 @@ def learn(lams, w, T2, budget, rng, sig_id, delta=1e-3, t_cap=None, n_ref=16, ba
         left = budget - T_tot; B = int(np.clip(0.25 * left / est, 20, batch))
         j0 = rng.choice(len(lams), size=B, p=w)
         prior = (np.array([post[c].mu for c in sorted(post)]), np.bincount(lab[lab >= 0], minlength=len(post)) + 1.0, u) if post else None
-        mu, ok, T, j = identify(j0, lams, w, T2, sig_id, t_cap, rng, T_sys=T_sys, prior=prior)
+        mu, ok, T, j = identify(j0, lams, w, T2, sig_id, t_cap, rng, T_sys=T_sys, prior=prior, w_jump=w_jump, count=count)
         keep = int(np.searchsorted(np.cumsum(T), left, side="right"))  # copies completed before the time is up
         if keep < B: mu, ok, T, j, B, out_of_time = mu[:keep], ok[:keep], T[:keep], j[:keep], keep, True
         if B == 0: break
@@ -175,7 +178,7 @@ def learn(lams, w, T2, budget, rng, sig_id, delta=1e-3, t_cap=None, n_ref=16, ba
             for _ in range(n_ref):
                 t_next = min(0.6 / post[c].sig, t_cap)
                 if post[c].sig <= tgt[c] * post[c].mu or T_tot + T.sum() + T_ref.sum() + t_next > budget: break
-                if np.isfinite(T_sys) and rng.uniform() > np.exp(-t_next / T_sys): j[b] = rng.choice(len(lams), p=w)
+                if np.isfinite(T_sys) and rng.uniform() > np.exp(-t_next / T_sys): j[b] = rng.choice(len(lams), p=w if w_jump is None else w_jump)
                 T_ref[b] += post[c].update(lams[j[b]], T2, t_cap, rng); n_ref_meas += 1
         T_tot += float(T.sum() + T_ref.sum()); T_copy_max = max(T_copy_max, float((T + T_ref).max())); T_ident += float(T.sum()); T_refine += float(T_ref.sum())
     if out_of_time: T_tot = float(budget)                              # the unfinished copy used up the rest

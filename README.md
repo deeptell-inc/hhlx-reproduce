@@ -28,7 +28,7 @@ Five tests: three self-checks of the sequential estimator (exact record identity
 learning run), the DC power-flow self-check with the time budgets of the stored runs, and `paper/check_numbers.py`.
 The last one asserts the numbers quoted in the text of `paper/main.tex` against `results/` at the quoted number of
 significant figures, checks that no run exceeds its time budget, and verifies the five manifests
-(`results/stage9_manifest.json` to `stage13_manifest.json`): SHA-256 of
+(`results/stage9_manifest.json` to `stage14_manifest.json`): SHA-256 of
 every script and result file, and that every result was written after the code that produced it.
 
 ## 2. Tables, Figs. 2 and 3 and the PDF from the stored results
@@ -56,6 +56,7 @@ Seeds are fixed. Jobs run as separate OS processes with single-threaded BLAS; th
 | Stage 11 | `sh run_stage11_all.sh` | about 5.5 h when run together with stage 12; up to 4 GB per process | `results/stage11_*.json`, `stage11_manifest.json` |
 | Stage 12 | `sh run_stage12_all.sh` | about 40 min | `results/stage12_*.json`, `stage12_manifest.json` |
 | Stage 13 | `sh run_stage13_all.sh` | about 7 h | `results/stage13_sweep.json`, `stage13_table.md`, `stage13_manifest.json` |
+| Stage 14 | `sh run_stage14_all.sh` | about 3.5 h | `results/stage14_system.json`, `stage14_table.md`, `stage14_manifest.json` |
 
 Order: stages 2 to 8, then 9, 10, 11, 12, 13 (each later stage imports the earlier scripts, and stages 11 to 13 read
 earlier results), then step 2 above. After rerunning one of stages 4, 6 or 8b alone, run
@@ -81,6 +82,7 @@ single jobs are listed there (for example `python stage9_sequential_qpe.py compa
 | Table XI (DC power flow) | `stage10_power_grid.py` | `results/stage10_compare.*.json`, `stage10_methods.*.json` |
 | Table XII (reservoir readout, forecasts) | `stage11_time_series.py` | `results/stage11_forecast.json` (from the other `stage11_*.json`) |
 | Fig. 3 (infidelity against budget), budget paragraphs of Secs. VIII and IX | `stage13_budget_sweep.py` | `results/stage13_sweep.json` |
+| Table XV (system register of finite lifetime), Sec. X | `stage14_system_noise.py` | `results/stage14_system.json` |
 | Table XIII (variational solver) | `stage12_nisq_baselines.py vqls` | `results/stage12_vqls.*.json` |
 | Table XIV (forecasting baselines) | `stage12_nisq_baselines.py qrc`, `qcl`, `dqi` | `results/stage12_qrc.*.json`, `stage12_qcl.*.json`, `stage12_dqi.*.json`, `stage11_forecast.json` |
 
@@ -98,8 +100,9 @@ quoted in the text; `paper/check_numbers.py` names the file for each of them.
 | `stage11_time_series.py` | Ridge readout of an echo state network for NARMA2, Mackey–Glass and Lorenz series |
 | `stage12_nisq_baselines.py` | Baselines without phase estimation: variational linear solver, quantum reservoir computing, quantum circuit learning, decoded quantum interferometry |
 | `stage13_budget_sweep.py` | The forecasting test and its baselines against the budget |
-| `run_stage9_all.sh` … `run_stage13_all.sh` | Full regeneration of one stage, with its manifest |
-| `results/` | Result files (JSON), three summary tables (`stage11_forecast.md`, `stage12_table.md`, `stage13_table.md`) and the manifests |
+| `stage14_system_noise.py` | The sequential estimator when the system register has a finite lifetime (two jump models, three systems) |
+| `run_stage9_all.sh` … `run_stage14_all.sh` | Full regeneration of one stage, with its manifest |
+| `results/` | Result files (JSON), four summary tables (`stage11_forecast.md`, `stage12_table.md`, `stage13_table.md`, `stage14_table.md`) and the manifests |
 | `paper/` | `main.tex`, `main.pdf`, `refs.bib`, `figs/`, `make_tables.py`, `check_numbers.py` |
 | `tests/` | The quick checks of step 1 |
 

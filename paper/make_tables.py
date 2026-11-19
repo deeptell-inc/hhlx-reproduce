@@ -211,19 +211,28 @@ def table_poly():
     return "\n".join(out)
 
 
+def eq(x, runs, e=e):
+    """Table cell: x (the median) with the lower and upper quartile of the finite runs as sub- and superscript; no scripts
+    where both print like the median.  e: the number format."""
+    v = np.array([r for r in runs if r is not None and np.isfinite(r)], float); assert len(v) >= 5 and e(float(np.median(v))) == e(x), (x, np.median(v))
+    lo, hi = (e(float(q)) for q in np.percentile(v, [25, 75]))
+    return e(x) if lo == e(x) == hi else f"{e(x)}$_{{{lo}}}^{{{hi}}}$"
+
+
 def table_grid():
     """Learning stages on the power-flow problems (stage 10): baselines at 1e4 shots, then the equal-time pair."""
     cases = ("case9", "case14", "case30"); M = {c: json.load(open(f"../results/stage10_methods.{c}.json")) for c in cases}
     C = {c: json.load(open(f"../results/stage10_compare.{c}.json"))["6-bit clock"] for c in cases}; keys = ("T2=inf", "T2=300.0"); out = []
     rows = (("Bayesian clock (mixture)", "Bayesian clock (mixture)"), ("QMEGS-type (mixture)", "QMEGS-type (mixture)"), ("MM-QCELS (mixture)", "MM-QCELS-type (mixture)"),
             ("QPE histogram, 6 bits", "QPE 6 bits"), ("QPE histogram, 8 bits", "QPE 8 bits"), ("QPE histogram, 10 bits", "QPE 10 bits"))
-    for m, lab in rows: out.append(lab + " & " + " & ".join(e(M[c][k][m]["1-F"]) if m in M[c][k] else "--" for c in cases for k in keys) + "\\\\")
+    for m, lab in rows: out.append(lab + " & " + " & ".join(eq(M[c][k][m]["1-F"], M[c][k][m]["runs"]["1-F"]) if m in M[c][k] else "--" for c in cases for k in keys) + "\\\\")
     out.append("\\midrule")
     pick = lambda r, pref: [x for x in r if x.startswith(pref)]
-    out.append("Projective HHL & " + " & ".join(e(C[c][k][pick(C[c][k], "projective (")[0]]["1-F"]) for c in cases for k in keys) + "\\\\")
+    q = lambda r: eq(r["1-F"], r["runs"]["1-F"])
+    out.append("Projective HHL & " + " & ".join(q(C[c][k][pick(C[c][k], "projective (")[0]]) for c in cases for k in keys) + "\\\\")
     seq = lambda c, k: pick(C[c][k], "sequential (budget x1.0, delta=0.001")
-    out.append("Recycled sequential HHL, register resolution & " + " & ".join(e(C[c][k][seq(c, k)[0]]["1-F"]) for c in cases for k in keys) + "\\\\")
-    out.append("Recycled sequential HHL, finest resolution & " + " & ".join((e(C[c][k][seq(c, k)[-1]]["1-F"]) if len(seq(c, k)) > 1 else "same") for c in cases for k in keys) + "\\\\")
+    out.append("Recycled sequential HHL, register resolution & " + " & ".join(q(C[c][k][seq(c, k)[0]]) for c in cases for k in keys) + "\\\\")
+    out.append("Recycled sequential HHL, finest resolution & " + " & ".join((q(C[c][k][seq(c, k)[-1]]) if len(seq(c, k)) > 1 else "same") for c in cases for k in keys) + "\\\\")
     return "\n".join(out)
 
 
@@ -234,23 +243,26 @@ def table_vqls():
     """Variational solver (stage 12) on the systems of Tables I, XI and XII and on the 118-bus system: exact cost, then
     stochastic optimisation within 1e4 and 1e7 executions."""
     out = []
-    for key, lab in [(k, lab) for k, lab, _ in NAMES] + [(f"case{n}", f"{n}-bus") for n in (9, 14, 30, 118)] + [(k, lab + " readout") for k, lab in SERIES]:
-        v = json.load(open(f"../results/stage12_vqls.{key.replace(' ', '_')}.json")); x = v["exact cost"]; c = lambda b: e(v[f"{b} executions"]["1-F"]) if "1-F" in v[f"{b} executions"] else "--"
-        out.append(f"{lab} & {v['qubits']} & {int(x['terms'])} & {'$<$1e-9' if x['1-F'] < 1e-9 else e(x['1-F'])} & {e(x['executions'])} & {c(10000)} & {c(10000000)}\\\\")
+    for key, lab in [(k, lab) for k, lab, _ in NAMES] + [(f"case{n}", f"{n}-bus") for n in (9, 14, 30, 118)] + [(k, lab) for k, lab in SERIES]:
+        v = json.load(open(f"../results/stage12_vqls.{key.replace(' ', '_')}.json")); x = v["exact cost"]; c = lambda b: eq(v[f"{b} executions"]["1-F"], v[f"{b} executions"]["runs"]["1-F"]) if "1-F" in v[f"{b} executions"] else "--"
+        out.append(f"{lab} & {v['qubits']} & {int(x['terms'])} & {'$<$1e-9' if x['1-F'] < 1e-9 else eq(x['1-F'], x['runs']['1-F'])} & {e(x['executions'])} & {c(10000)} & {c(10000000)}\\\\")
     return "\n".join(out)
 
 
 def table_series():
     """Learning stages on the ridge systems of stage 11 within ten times the time of 1e4 projective shots: median 1-F and
     the number of the ten runs whose forecasts differ from those of the exact ridge readout by less than 1e-3."""
-    F = json.load(open("../results/stage11_forecast.json")); out = []
+    F = json.load(open("../results/stage11_forecast.json")); out = []; R = {}        # R: the infidelities of the single runs, from the files the forecast table was made of
+    for c, _ in SERIES:
+        for fn in sorted(glob.glob(f"../results/stage11_scale.{c}.x10*.json") + glob.glob(f"../results/stage11_baselines.{c}.x10*.json")):
+            d = json.load(open(fn)); R.update({(c, f"{d.get('noise', 'T2=inf')}, {n}, x10 time"): r["runs"]["1-F"] for n, r in d.items() if isinstance(r, dict)})
     def cell(c, k, pick):
-        r = [v for n, v in F[c].items() if isinstance(v, dict) and n.startswith(k + ", ") and n.endswith("x10 time") and pick(n)]
+        r = [(n, v) for n, v in F[c].items() if isinstance(v, dict) and n.startswith(k + ", ") and n.endswith("x10 time") and pick(n)]
         if not r: return "--"
-        assert len(r) == 1 and len(r[0]["dev_runs"]) == 10; return f"{e(r[0]['1-F'])} ({sum(d < 1e-3 for d in r[0]['dev_runs'])})"
+        assert len(r) == 1 and len(r[0][1]["dev_runs"]) == 10 and len(R[c, r[0][0]]) == 10; n, v = r[0]; return f"{eq(v['1-F'], R[c, n])} ({sum(d < 1e-3 for d in v['dev_runs'])})"
     rows = [(lab, lambda n, m=m: m in n) for m, lab in (("Bayesian clock", "Bayesian clock (mixture)"), ("QMEGS", "QMEGS-type (mixture)"), ("MM-QCELS", "MM-QCELS-type (mixture)"),
                                                         ("6 bits", "QPE 6 bits"), ("8 bits", "QPE 8 bits"), ("10 bits", "QPE 10 bits"), ("projective", "Projective HHL"))]
-    rows += [(r"Recycled sequential HHL, $\sigma_{\rm id}=0.005$", lambda n: "sequential" in n and "sig_id=0.00500" in n), ("Recycled sequential HHL, finest resolution", lambda n: "sequential" in n and "sig_id=0.00500" not in n)]
+    rows += [(r"Recycled sequential HHL, $\sigma_{\rm id}=0.005$", lambda n: "sequential" in n and "sig_id=0.00500" in n), (r"Recycled sequential HHL, finest $\sigma_{\rm id}$", lambda n: "sequential" in n and "sig_id=0.00500" not in n)]
     for lab, pick in rows:
         if lab == "Projective HHL": out.append("\\midrule")
         out.append(lab + " & " + " & ".join(cell(c, k, pick) for c, _ in SERIES for k in ("T2=inf", "T2=300.0")) + "\\\\")
@@ -260,13 +272,28 @@ def table_series():
 def table_nisq():
     """Forecast NMSE of the baselines without phase estimation (stage 12) on the three series."""
     J = {(m, c): json.load(open(f"../results/stage12_{m}.{c}.json")) for m in ("vqls", "qrc", "qcl", "dqi") for c, _ in SERIES}; F = json.load(open("../results/stage11_forecast.json"))
-    rows = [("Ridge readout, exact", lambda c: F[c]["ridge at this kappa"]), ("Last known value", lambda c: F[c]["persistence"]),
-            ("Variational solver, exact", lambda c: J["vqls", c]["exact cost"]["NMSE"]), ("Variational solver, $10^5$", lambda c: J["vqls", c]["100000 executions"]["NMSE"]),
-            ("Variational solver, $10^7$", lambda c: J["vqls", c]["10000000 executions"]["NMSE"]),
-            ("Quantum reservoir, exact", lambda c: J["qrc", c]["exact expectation values"]["NMSE"]), ("Quantum reservoir, $10^5$", lambda c: J["qrc", c]["100000 executions"]["NMSE"]),
-            ("Circuit learning, exact", lambda c: J["qcl", c]["exact expectation values"]["NMSE"]), ("Circuit learning, $10^5$", lambda c: J["qcl", c]["100000 executions"]["NMSE"]),
-            ("DQI, $r=5$, $10^5$", lambda c: J["dqi", c]["sets of 5"]["100000 executions"]["NMSE"]), ("DQI, $r=15$, $10^5$", lambda c: J["dqi", c]["sets of 15"]["100000 executions"]["NMSE"])]
-    return "\n".join(lab + " & " + " & ".join(e(g(c)) for c, _ in SERIES) + "\\\\" + ("\n\\midrule" if lab == "Last known value" else "") for lab, g in rows)
+    q = lambda r: eq(r["NMSE"], r["runs"]["NMSE"]) if "runs" in r else e(r["NMSE"])                 # quartiles where the entry is a median of runs
+    rows = [("Ridge readout, exact", lambda c: e(F[c]["ridge at this kappa"])), ("Last known value", lambda c: e(F[c]["persistence"])),
+            ("Variational solver, exact", lambda c: q(J["vqls", c]["exact cost"])), ("Variational solver, $10^5$", lambda c: q(J["vqls", c]["100000 executions"])),
+            ("Variational solver, $10^7$", lambda c: q(J["vqls", c]["10000000 executions"])),
+            ("Quantum reservoir, exact", lambda c: q(J["qrc", c]["exact expectation values"])), ("Quantum reservoir, $10^5$", lambda c: q(J["qrc", c]["100000 executions"])),
+            ("Circuit learning, exact", lambda c: q(J["qcl", c]["exact expectation values"])), ("Circuit learning, $10^5$", lambda c: q(J["qcl", c]["100000 executions"])),
+            ("DQI, $r=5$, $10^5$", lambda c: q(J["dqi", c]["sets of 5"]["100000 executions"])), ("DQI, $r=15$, $10^5$", lambda c: q(J["dqi", c]["sets of 15"]["100000 executions"]))]
+    return "\n".join(lab + " & " + " & ".join(g(c) for c, _ in SERIES) + "\\\\" + ("\n\\midrule" if lab == "Last known value" else "") for lab, g in rows)
+
+
+def table_system():
+    """Sequential estimator with a system register of finite lifetime (stage 14): solution infidelity, then the relative
+    error of the compliance in per cent, for the two jump models; the column without system noise is common to both."""
+    d = json.load(open("../results/stage14_system.json")); out = []
+    for key, head, fmt in (("1-F", "Solution infidelity $1-F$", e), ("eC", "Error of the compliance (\\%)", pct)):
+        out.append(f"\\multicolumn{{8}}{{l}}{{\\emph{{{head}}}}}\\\\")
+        for sy, lab in (("poisson8", "Poisson $N=8$"), ("case9", "9-bus"), ("lorenz", "Lorenz readout")):
+            for m in ("redraw", "depolarising"):
+                rows = [d[sy]["T_sys=inf"]] + [d[sy][m][f"T_sys={t}"] for t in ("3e+06", "1e+06", "300000", "100000", "30000", "10000")]
+                out.append(f"{lab}, {'redrawing' if m == 'redraw' else 'depolarising'} & " + " & ".join(eq(r[key], r["runs"][key], fmt) for r in rows) + "\\\\")
+        if key == "1-F": out.append("\\midrule")
+    return "\n".join(out)
 
 
 def splice(tex, label, body):
@@ -279,5 +306,5 @@ if __name__ == "__main__":
     tex = open("main.tex").read()
     tex = splice(tex, "tab:learn", table1()); tex = splice(tex, "tab:clock", table2()); tex = splice(tex, "tab:qoi", table4())
     tex = splice(tex, "tab:matched", table_matched()); tex = splice(tex, "tab:matchedC", table_matchedC()); tex = splice(tex, "tab:qoiseq", table_qoiseq())
-    tex = splice(tex, "tab:window", table_window()); tex = splice(tex, "tab:cost", table_cost()); tex = splice(tex, "tab:miscal", table_miscal()); tex = splice(tex, "tab:poly", table_poly()); tex = splice(tex, "tab:grid", table_grid()); tex = splice(tex, "tab:vqls", table_vqls()); tex = splice(tex, "tab:series", table_series()); tex = splice(tex, "tab:nisq", table_nisq())
+    tex = splice(tex, "tab:window", table_window()); tex = splice(tex, "tab:cost", table_cost()); tex = splice(tex, "tab:miscal", table_miscal()); tex = splice(tex, "tab:poly", table_poly()); tex = splice(tex, "tab:grid", table_grid()); tex = splice(tex, "tab:vqls", table_vqls()); tex = splice(tex, "tab:series", table_series()); tex = splice(tex, "tab:nisq", table_nisq()); tex = splice(tex, "tab:system", table_system())
     open("main.tex", "w").write(tex); fig2(); fig3(); print("tables, Fig. 2 and Fig. 3 regenerated")
