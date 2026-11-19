@@ -368,11 +368,6 @@ assert all(ok(r11("lorenz", k_, s_)) == 10 for k_ in _K for s_ in ("sig_id=0.005
 sig(r11("lorenz", "T2=inf", "sig_id=0.00030")["1-F"], 1.5e-4); assert all(f"{r11('lorenz', k_, s_)['1-F']:.3f}" in ("0.015", "0.016") for k_, s_ in (("T2=inf", "sig_id=0.00500"), ("T2=300.0", "sig_id=0.00500"), ("T2=300.0", "sig_id=0.00200")))
 assert max(ok(r11("lorenz", k_, m_)) for k_ in _K for m_ in ("Bayesian clock", "QMEGS", "MM-QCELS")) == 1 and not any("8 bits" in n_ or "10 bits" in n_ for c_ in _ser for n_ in _x10[c_, "T2=300.0"])
 assert f"{r11('lorenz', 'T2=inf', 'sig_id=0.00500')['NMSE']:.3f}" == "0.137" and f"{r11('lorenz', 'T2=inf', 'sig_id=0.00030')['NMSE']:.3f}" == "0.131" and f"{r11('lorenz', 'T2=inf', 'sig_id=0.00500')['1-F']:.3f}" == "0.016"
-# a tenth of the budget (the protocol of Table XI): stored rows of `compare` (ten runs) and `methods` (100 repetitions)
-_s1 = lambda c_, k_: r11(c_, k_, "sequential (budget x1.0, delta=0.001, sig_id=0.0050", x10=False); _p1 = lambda c_, k_: r11(c_, k_, "projective (", x10=False)
-assert [ok(_s1("lorenz", k_)) for k_ in _K] == [10, 1] and [ok(_p1("lorenz", k_)) for k_ in _K] == [2, 0] and all(np.isclose(_p1(c_, "T2=inf")["T"], _bud[c_] / 10) for c_ in _ser)
-_n1 = [(n_, ok(r_), len(r_["dev_runs"])) for n_, r_ in FC["narma2"].items() if isinstance(r_, dict) and not n_.endswith("x10 time") and "standard HHL" not in n_]
-assert max(o_ for n_, o_, m_ in _n1 if m_ <= 10) == 4 and max(o_ for n_, o_, m_ in _n1 if m_ > 10) == 14 and all(m_ <= 10 or 96 <= m_ <= 100 for n_, o_, m_ in _n1)
 # discussion: the finest resolution reproduces the forecast in all runs; Projective HHL in none to nine
 assert all(ok(r11(c_, k_, _fin[k_])) == 10 for c_ in _ser for k_ in _K) and sorted(ok(r11(c_, k_, "projective")) for c_ in _ser for k_ in _K) == [0, 2, 4, 5, 6, 9] and f"{100 * max(_sp11[c_][2][_sp11[c_][3]].sum() for c_ in _ser):.0f}" == "72"
 M11 = json.load(open("../results/stage11_manifest.json")); assert len(M11["results"]) == 19 and all(_sha(p_) == v["sha256"] for p_, v in list(M11["code"].items()) + list(M11["results"].items()))
@@ -417,6 +412,40 @@ assert {(m_, c_) for m_, v_ in _at5.items() for c_, x_, l_ in zip(_ser, v_, _las
 assert all(x_ > 1.5 * r_ for v_ in _at5.values() for x_, r_ in zip(v_, _ridge))
 M12 = json.load(open("../results/stage12_manifest.json")); assert len(M12["results"]) == 20 and all(_sha(p_) == v["sha256"] for p_, v in list(M12["code"].items()) + list(M12["results"].items()))
 assert min(v["mtime"] for v in M12["results"].values()) > max(v["mtime"] for v in M12["code"].values())
+
+# --- error against budget (Sec. VIII, Fig. 3; Sec. IX "Number of executions"; stage 13): medians of ten runs
+SW = json.load(open("../results/stage13_sweep.json")); _mu = (0.1, 0.3, 1, 3, 10, 30); _nz = ("T2=inf", "T2=300.0")
+_pt = {(p_["series"], p_["noise"], p_["method"]): {} for p_ in SW["points"]}
+for p_ in SW["points"]: _pt[p_["series"], p_["noise"], p_["method"]][p_["mult"]] = p_
+assert len(SW["points"]) == 108 and all(sorted(v_) == list(_mu) and all(len(q_["runs"]["1-F"]) == 10 for q_ in v_.values()) for v_ in _pt.values())
+_f = lambda c_, k_, m_, x_, q_="1-F": _pt[c_, k_, m_][x_][q_]; _fine, _coarse, _proj = "sequential-fine", "sequential-coarse", "projective"
+assert all(np.isclose(_f(c_, k_, m_, 1, "budget"), _bud[c_] / 10) for c_, k_, m_ in _pt)                         # ten units are the budget of Table XII
+assert all(_f(c_, k_, _coarse, 1, "sig_id") == 0.005 and np.isclose(_f(c_, k_, _fine, 1, "sig_id"), 3e-4 if k_ == "T2=inf" else 0.002) for c_ in _ser for k_ in _nz)
+assert all(_f(c_, "T2=inf", _proj, 1, "clock bits") == 6 and _f(c_, "T2=300.0", _proj, 1, "clock bits") == 5 for c_ in _ser)
+assert all(f"{_f('narma2', 'T2=inf', _fine, x_):.2f}" == "0.43" for x_ in (0.1, 0.3, 1)); sig(_f("narma2", "T2=inf", _fine, 3), 0.19); sig(_f("narma2", "T2=inf", _fine, 10), 2.7e-3); sig(_f("narma2", "T2=inf", _fine, 30), 7.7e-5)
+assert all(f"{_f('lorenz', 'T2=inf', _coarse, x_):.3f}" == "0.016" for x_ in _mu[1:]) and _f("lorenz", "T2=inf", _coarse, 0.1) > 0.3
+assert f"{_f('lorenz', 'T2=inf', _fine, 3):.3f}" == "0.016" and _f("lorenz", "T2=inf", _fine, 1) > 0.1; sig(_f("lorenz", "T2=inf", _fine, 10), 1.5e-4)
+assert all(0.0145 <= _f("lorenz", "T2=300.0", m_, x_) < 0.0195 for m_ in (_coarse, _fine) for x_ in (1, 3, 10, 30))
+assert [int(_f("narma2", "T2=inf", _proj, x_, "shots")) for x_ in _mu] == [1000, 3000, 10000, 30000, 100000, 300000] and all(f"{_f('narma2', 'T2=inf', _proj, x_):.2f}" in ("0.42", "0.43") for x_ in _mu)
+_r13 = [_f(c_, k_, _proj, 30) / _f(c_, k_, _proj, 1) for c_ in _ser for k_ in _nz]; assert f"{min(_r13):.1f}" == "0.8" and f"{max(_r13):.1f}" == "2.8"
+_dn = lambda lo_: max(abs(p_["NMSE"] - FC[p_["series"]]["ridge at this kappa"]) for p_ in SW["points"] if p_["mult"] >= lo_)                # forecast against budget
+assert 0.06 < _dn(1) < 0.07 and 0.11 < max(abs(p_["NMSE"] - FC[p_["series"]]["ridge at this kappa"]) for p_ in SW["points"]) < 0.12
+assert f"{_f('narma2', 'T2=inf', _fine, 1, 'NMSE'):.2f}" == "0.15" and f"{_f('narma2', 'T2=inf', _fine, 30, 'NMSE'):.2f}" == "0.12"
+_rep = lambda c_, k_, m_: [_f(c_, k_, m_, x_, "reproduced") for x_ in _mu]; assert all(p_["reproduced"] == sum(d_ < 1e-3 for d_ in p_["runs"]["dev"]) for p_ in SW["points"])
+assert all(_rep("mackey-glass", k_, _coarse) == [10] * 6 for k_ in _nz) and _rep("lorenz", "T2=inf", _coarse)[1:] == [10] * 5 and _rep("lorenz", "T2=inf", _coarse)[0] < 10
+assert _rep("lorenz", "T2=300.0", _coarse)[2:] == [10] * 4 and max(_rep("lorenz", "T2=300.0", _coarse)[:2]) < 10
+assert all(_rep("narma2", k_, _fine)[4:] == [10, 10] and max(_rep("narma2", k_, _fine)[:4]) < 10 and max(_rep("narma2", k_, _coarse)) < 10 for k_ in _nz)
+assert sum(_f(c_, k_, _proj, x_, "reproduced") == 10 for c_ in _ser for k_ in _nz for x_ in _mu) == 2
+sig(_f("narma2", "T2=300.0", _coarse, 1, "dev"), 0.063); assert f"{_f('narma2', 'T2=300.0', _coarse, 0.1, 'dev'):.3f}" == "0.005"
+_b13 = lambda c_, b_, e_, q_="NMSE": SW["baselines"][c_][b_][str(e_)][q_]; _ex = (10**4, 3 * 10**4, 10**5, 3 * 10**5, 10**6, 3 * 10**6, 10**7)   # number of executions
+assert all(set(SW["baselines"][c_][b_]) == {str(e_) for e_ in _ex} for c_ in _ser for b_ in ("vqls", "qrc", "qcl", "dqi")) and all(SW["baselines"][c_]["qrc"]["10000"] is None for c_ in _ser)
+assert [f"{_b13(c_, 'qrc', 3 * 10**4):.2f}" for c_ in _ser] == ["0.86", "0.79", "0.60"] and [f"{_b13(c_, 'qrc', 10**7):.2f}" for c_ in _ser] == ["0.24", "0.24", "0.25"]
+_q13 = [_b13(c_, "qcl", e_) for c_ in _ser for e_ in _ex[:3]]; assert f"{min(_q13):.2f}" == "0.95" and f"{max(_q13):.2f}" == "1.04" and [f"{_b13(c_, 'qcl', 10**7):.2f}" for c_ in _ser] == ["0.90", "0.74", "0.63"]
+assert min(_b13(c_, "vqls", e_, "1-F") for c_ in _ser for e_ in _ex) > 0.9
+_dq = [_b13(c_, "dqi", e_, q_) for c_ in _ser for e_ in _ex[2:] for q_ in ("NMSE, sets of 5", "NMSE, sets of 15")]; assert f"{min(_dq):.2f}" == "0.26" and f"{max(_dq):.1f}" == "1.9"
+assert all(np.allclose(_b13(c_, b_, 10**5), V12[c_]["100000 executions"]["NMSE"] if b_ == "vqls" else json.load(open(f"../results/stage12_{b_}.{c_}.json"))["100000 executions"]["NMSE"]) for c_ in _ser for b_ in ("vqls", "qrc", "qcl"))   # the same runs as stage 12
+M13 = json.load(open("../results/stage13_manifest.json")); assert len(M13["code"]) == 3 and list(M13["results"]) == ["results/stage13_sweep.json"] and all(_sha(p_) == v["sha256"] for p_, v in list(M13["code"].items()) + list(M13["results"].items()))
+assert min(v["mtime"] for v in M13["results"].values()) > max(v["mtime"] for v in M13["code"].values())
 
 # --- provenance: the manifest matches the files, and every stage-9 result is newer than the code that produced it
 import hashlib

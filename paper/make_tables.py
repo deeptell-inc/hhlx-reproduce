@@ -172,6 +172,30 @@ def fig2():
     fig.tight_layout(); fig.savefig("figs/fig2_detection.png", dpi=220)
 
 
+def fig3():
+    """Solution infidelity against the time budget on the three ridge systems (stage 13): medians of ten runs, bars from the
+    lowest to the highest run.  Colours as in Fig. 2 (projective green, sequential blue)."""
+    import matplotlib; matplotlib.use("Agg"); import matplotlib.pyplot as plt
+    d = json.load(open("../results/stage13_sweep.json"))["points"]; ink, mute = "#0b0b0b", "#52514e"
+    style = {"projective": ("#1baf7a", "s", "-", "#1baf7a", "Projective HHL"), "sequential-coarse": ("#2a78d6", "^", "--", "white", r"Recycled sequential HHL, $\sigma_{\rm id}=0.005$"),
+             "sequential-fine": ("#2a78d6", "^", "-", "#2a78d6", "Recycled sequential HHL, finest resolution")}
+    fig, ax = plt.subplots(2, 3, figsize=(7.2, 4.1), sharex=True, sharey=True)
+    for i, noise in enumerate(("T2=inf", "T2=300.0")):
+        for j, (c, name) in enumerate(SERIES):
+            a = ax[i, j]
+            for k, (m, (col, mk, ls, mfc, lab)) in enumerate(style.items()):
+                ps = sorted((p for p in d if (p["series"], p["noise"], p["method"]) == (c, noise, m)), key=lambda p: p["mult"]); assert len(ps) == 6
+                x = np.array([p["mult"] for p in ps]) * (1 + 0.07 * (k - 1)); y = np.array([p["1-F"] for p in ps]); r = np.array([p["runs"]["1-F"] for p in ps])
+                a.errorbar(x, y, yerr=[y - r.min(1), r.max(1) - y], color=col, marker=mk, ls=ls, lw=1.2, ms=4.5, mfc=mfc, mec=col, mew=1.0, elinewidth=0.6, label=lab)
+            a.set_xscale("log"); a.set_yscale("log"); a.grid(alpha=0.25, lw=0.6); a.tick_params(colors=mute, labelsize=7)
+            a.set_title(f"{name.replace('--', chr(8211))}, {'no dephasing' if noise == 'T2=inf' else '$T_2=300$'}", fontsize=8, color=ink)
+            for sp in ("top", "right"): a.spines[sp].set_visible(False)
+            if i == 1: a.set_xlabel("time budget", fontsize=8, color=ink)
+            if j == 0: a.set_ylabel("infidelity $1-F$", fontsize=8, color=ink)
+    h, l = ax[0, 0].get_legend_handles_labels(); fig.legend(h, l, loc="upper center", ncol=3, fontsize=7, frameon=False); fig.tight_layout(rect=(0, 0, 1, 0.94))
+    fig.savefig("figs/fig3_budget.png", dpi=220); plt.close(fig)
+
+
 def table_poly():
     """Degree table from the forty learning runs of stage 6: runs reaching the target, the degree that at least half of
     the runs reach (-- if fewer than half do), and the median subnormalisation of the reaching runs."""
@@ -256,4 +280,4 @@ if __name__ == "__main__":
     tex = splice(tex, "tab:learn", table1()); tex = splice(tex, "tab:clock", table2()); tex = splice(tex, "tab:qoi", table4())
     tex = splice(tex, "tab:matched", table_matched()); tex = splice(tex, "tab:matchedC", table_matchedC()); tex = splice(tex, "tab:qoiseq", table_qoiseq())
     tex = splice(tex, "tab:window", table_window()); tex = splice(tex, "tab:cost", table_cost()); tex = splice(tex, "tab:miscal", table_miscal()); tex = splice(tex, "tab:poly", table_poly()); tex = splice(tex, "tab:grid", table_grid()); tex = splice(tex, "tab:vqls", table_vqls()); tex = splice(tex, "tab:series", table_series()); tex = splice(tex, "tab:nisq", table_nisq())
-    open("main.tex", "w").write(tex); fig2(); print("tables and Fig. 2 regenerated")
+    open("main.tex", "w").write(tex); fig2(); fig3(); print("tables, Fig. 2 and Fig. 3 regenerated")
