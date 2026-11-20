@@ -746,6 +746,9 @@ Several limitations should be stated.
 
 \emph{Spectral correction.} With $p_0=\sum_\ell c_\ell T_{2\ell+1}$ and residuals $r_k=\lmin-\lambda_kp_0(\lambda_k)$ at the $K$ learned eigenvalues, solve $G\alpha=r$ with $G_{ik}=\lambda_i\lambda_k\sum_\ell T_{2\ell+1}(\lambda_i)T_{2\ell+1}(\lambda_k)$ and set $\Delta c_\ell=\sum_k\alpha_k\lambda_kT_{2\ell+1}(\lambda_k)$ \cite{Suresh2026}; the base polynomial here is the bounded odd interval solution of the linear program.
 
+\section*{Acknowledgment}
+In accordance with IEEE policy, the authors disclose the use of generative artificial intelligence. Claude (Anthropic; models Claude Fable 5.1 and 5.2, used through Claude Code) generated, under the direction of the authors, the simulation code, the scripts that produce the tables and the figures, and drafts of the text of all sections, including the appendix. The authors defined the research question, directed and reviewed the analyses, verified the results and the text, and take full responsibility for the content of the article.
+
 \section*{Code and data availability}
 The stage scripts, the result files and the scripts that regenerate every table of this paper and check a hand-written list of the numbers quoted in the text against the result files, together with SHA-256 manifests of code and results, are available at \url{https://github.com/deeptell-inc/hhlx-reproduce}.
 
