@@ -395,7 +395,7 @@ for k in V12:                                       # shots per term: the larges
 J12 = {(m_, c_): json.load(open(f"../results/stage12_{m_}.{c_}.json")) for m_ in ("qrc", "qcl", "dqi") for c_ in _ser}; _nm = lambda m_, row_: [(V12[c_] if m_ == "vqls" else J12[m_, c_])[row_]["NMSE"] for c_ in _ser]
 _q2 = lambda xs, qs: [sig(x_, q_) for x_, q_ in zip(xs, qs)]
 _q2(_nm("qrc", "exact expectation values"), (0.21, 0.23, 0.24)); _q2(_nm("qcl", "exact expectation values"), (0.14, 0.097, 0.0084)); _q2(_nm("qrc", "100000 executions"), (0.64, 0.56, 0.43)); _q2(_nm("vqls", "100000 executions"), (0.97, 0.69, 0.44))
-assert all(f"{x_:.3f}" == f"{FC[c_]['ridge at this kappa']:.3f}" for x_, c_ in zip(_nm("vqls", "exact cost"), _ser)) and all(0.945 <= x_ < 1.005 for x_ in _nm("qcl", "100000 executions"))
+assert all(f"{x_:.3f}" == f"{FC[c_]['ridge at this kappa']:.3f}" for x_, c_ in zip(_nm("vqls", "exact cost"), _ser)) and [f"{x_:.2f}" for x_ in _nm("qcl", "100000 executions")] == ["0.91", "0.80", "0.62"]
 _ridge = [FC[c_]["ridge at this kappa"] for c_ in _ser]; _last = [FC[c_]["persistence"] for c_ in _ser]; _qe = _nm("qcl", "exact expectation values"); assert _qe[0] > _ridge[0] and _qe[1] < _ridge[1] and _qe[2] < _ridge[2]
 _cir = [J12["qcl", c_]["exact expectation values"]["executions"] for c_ in _ser]; sig(min(_cir), 9e6, 1); sig(max(_cir), 3e7, 1); assert 1e6 <= min(_ex[c_]["executions"] for c_ in _ser) and max(_cir) <= 3.5e7
 assert all(J12["qrc", c_]["circuits"] == 12000 and J12["qrc", c_]["features"] == 16 and J12["qrc", c_]["100000 executions"]["shots per circuit"] == 8 and "not runnable" in J12["qrc", c_]["10000 executions"] for c_ in _ser)
@@ -440,7 +440,8 @@ sig(_f("narma2", "T2=300.0", _coarse, 1, "dev"), 0.063); assert f"{_f('narma2', 
 _b13 = lambda c_, b_, e_, q_="NMSE": SW["baselines"][c_][b_][str(e_)][q_]; _ex = (10**4, 3 * 10**4, 10**5, 3 * 10**5, 10**6, 3 * 10**6, 10**7)   # number of executions
 assert all(set(SW["baselines"][c_][b_]) == {str(e_) for e_ in _ex} for c_ in _ser for b_ in ("vqls", "qrc", "qcl", "dqi")) and all(SW["baselines"][c_]["qrc"]["10000"] is None for c_ in _ser)
 assert [f"{_b13(c_, 'qrc', 3 * 10**4):.2f}" for c_ in _ser] == ["0.86", "0.79", "0.60"] and [f"{_b13(c_, 'qrc', 10**7):.2f}" for c_ in _ser] == ["0.24", "0.24", "0.25"]
-_q13 = [_b13(c_, "qcl", e_) for c_ in _ser for e_ in _ex[:3]]; assert f"{min(_q13):.2f}" == "0.95" and f"{max(_q13):.2f}" == "1.04" and [f"{_b13(c_, 'qcl', 10**7):.2f}" for c_ in _ser] == ["0.90", "0.74", "0.63"]
+assert [f"{_b13(c_, 'qcl', 10**4):.2f}" for c_ in _ser] == ["1.00", "0.87", "1.04"] and [f"{_b13(c_, 'qcl', 10**7):.2f}" for c_ in _ser] == ["0.59", "0.59", "0.41"]
+assert _b13("mackey-glass", "qcl", 3 * 10**6) > _b13("mackey-glass", "qcl", 3 * 10**4)      # "improves unevenly": not monotone in the number of executions
 assert min(_b13(c_, "vqls", e_, "1-F") for c_ in _ser for e_ in _ex) > 0.9
 _dq = [_b13(c_, "dqi", e_, q_) for c_ in _ser for e_ in _ex[2:] for q_ in ("NMSE, sets of 5", "NMSE, sets of 15")]; assert f"{min(_dq):.2f}" == "0.26" and f"{max(_dq):.1f}" == "1.9"
 assert all(np.allclose(_b13(c_, b_, 10**5), V12[c_]["100000 executions"]["NMSE"] if b_ == "vqls" else json.load(open(f"../results/stage12_{b_}.{c_}.json"))["100000 executions"]["NMSE"]) for c_ in _ser for b_ in ("vqls", "qrc", "qcl"))   # the same runs as stage 12
@@ -483,6 +484,22 @@ assert _pc(max(_r14("lorenz", "redraw", t_)["eC"] for t_ in _T14[:4])) == "1.7" 
 assert [_r14("lorenz", "depolarising", t_)["false"] for t_ in _T14[3:]] == [1, 4, 11] and all(max(_r14("lorenz", "depolarising", t_)["runs"]["false"]) == 0 for t_ in _T14[:3])
 assert max(_r14("case9", "depolarising", t_)["eC"] for t_ in _T14[:4]) < 0.01 and [_pc(_r14("case9", "depolarising", t_)["eC"]) for t_ in _T14[4:]] == ["3.3", "8.9"] and _pc(max(_r14("case9", "redraw", t_)["eC"] for t_ in _T14)) == "0.4"
 _e8 = [_r14("poisson8", m_, t_)["eC"] for m_ in ("redraw", "depolarising") for t_ in ("inf",) + _T14]; assert (_pc(min(_e8)), _pc(max(_e8)), _pc(_i14["poisson8"]["eC"])) == ("1.3", "5.6", "2.5")
+# v17: the points the panel re-check of v16 asked to state
+_p1 = {(p_["series"], p_["noise"], p_["method"]): p_ for p_ in SW["points"] if p_["mult"] == 1}; _st = [(c_, n_) for c_ in _ser for n_ in ("T2=inf", "T2=300.0")]; _f1 = lambda c_, n_, m_: float(np.median(_p1[c_, n_, m_]["runs"]["1-F"]))
+_wf = [(c_, n_) for c_, n_ in _st if _f1(c_, n_, "projective") < _f1(c_, n_, "sequential-fine")]; _wc = [(c_, n_) for c_, n_ in _st if _f1(c_, n_, "projective") < _f1(c_, n_, "sequential-coarse")]
+assert len(_wf) == 4 and _wc == [("mackey-glass", "T2=300.0")] and sum(_f1(c_, n_, "sequential-fine") / _f1(c_, n_, "projective") < 1.01 for c_, n_ in _wf) == 1          # the reversal at one unit
+_mg = ("mackey-glass", "T2=300.0"); assert [f"{_f1(*_mg, m_):.3f}" for m_ in ("projective", "sequential-coarse", "sequential-fine")] == ["0.024", "0.055", "0.055"] and [sum(x_ < 1e-3 for x_ in _p1[_mg + (m_,)]["runs"]["dev"]) for m_ in ("projective", "sequential-coarse", "sequential-fine")] == [6, 10, 10]
+_tb = [max(p_["runs"]["T"]) / p_["budget"] for p_ in SW["points"] if p_["method"] == "projective" and p_["noise"] == "T2=inf"]; _tl = [min(p_["runs"]["T"]) / p_["budget"] for p_ in SW["points"] if p_["method"] == "projective" and p_["noise"] == "T2=inf"]
+assert f"{max(_tb):.2f}" == "1.04" and f"{min(_tl):.2f}" == "0.79" and max(max(p_["runs"]["T"]) / p_["budget"] for p_ in SW["points"] if not (p_["method"] == "projective" and p_["noise"] == "T2=inf")) <= 1 + 1e-9   # caption of Fig. 3
+_lc = _i14["lorenz"]["runs"]["T_copy_max"]; sig(max(_lc), 1.4e5); sig(max(x_ for m_ in ("redraw", "depolarising") for t_ in _T14 for x_ in _r14("lorenz", m_, t_)["runs"]["T_copy_max"]), 2.3e5); assert 3e6 / max(_lc) > 20   # longest copy: median, maximum, with system noise; "more than twenty times"
+sig(3e5 / _i14["lorenz"]["T_copy_max"], 2.5); sig(3e5 / _i14["poisson8"]["T_copy_max"], 9, 1); sig(3e5 / _i14["case9"]["T_copy_max"], 9, 1); assert max(_r14("lorenz", "depolarising", t_)["1-F"] for t_ in _T14) < 2e-3
+# the merged cluster on the Lorenz readout, from the stored learned values and label counts
+_m0 = lambda r_: ([m_[0] for m_ in r_["runs"]["mu"]], [n_[0] for n_ in r_["runs"]["counts"]]); _v0, _n0 = _m0(_i14["lorenz"]); within(_v0, 0.01095, 0.01135); assert (min(_n0), max(_n0)) == (5, 13) and all(len(m_) == 5 for m_ in _i14["lorenz"]["runs"]["mu"])
+_r36 = _r14("lorenz", "depolarising", "3e+06"); _v6, _n6 = _m0(_r36); _hi = [k_ for k_, f_ in enumerate(_r36["runs"]["1-F"]) if f_ > 1e-3]; assert len(_hi) == 6
+within([_v6[k_] for k_ in _hi], 0.01005, 0.01025); assert (min(_n6[k_] for k_ in _hi), max(_n6[k_] for k_ in _hi)) == (41, 68)
+_own = lambda t_: sum(len(m_) == 6 and m_[0] < 0.0103 and 0.0109 < m_[1] < 0.0115 for m_ in _r14("lorenz", "depolarising", t_)["runs"]["mu"]); assert (_own("1e+06"), _own("300000")) == (8, 9)
+assert sum(m_ == 8 for m_ in _r14("poisson8", "depolarising", "30000")["runs"]["m"]) == 7 and all(m_ == 8 for m_ in _r14("poisson8", "depolarising", "10000")["runs"]["m"]) and sum(m_ == 7 for m_ in _i14["poisson8"]["runs"]["m"]) == 8
+assert all(len(r_["runs"][k_]) == 10 and all(len(a_) == len(b_) for a_, b_ in zip(r_["runs"]["mu"], r_["runs"][k_])) for s_ in _sy for r_ in [_i14[s_]] + [_r14(s_, m_, t_) for m_ in ("redraw", "depolarising") for t_ in _T14] for k_ in ("weights", "counts"))
 M14 = json.load(open("../results/stage14_manifest.json")); assert len(M14["code"]) == 4 and list(M14["results"]) == ["results/stage14_system.json"] and all(_sha(p_) == v["sha256"] for p_, v in list(M14["code"].items()) + list(M14["results"].items()))
 assert min(v["mtime"] for v in M14["results"].values()) > max(v["mtime"] for v in M14["code"].values())
 

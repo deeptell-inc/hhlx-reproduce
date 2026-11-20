@@ -196,7 +196,10 @@ def qcl_z(theta, X):
 
 def qcl(case, rng, budget=None):
     """One training run.  budget None: exact expectation values and gradient, L-BFGS-B.  Otherwise SPSA on minibatches
-    of BATCH samples with one shot each.  The test forecasts use exact expectation values in both cases."""
+    of BATCH samples with two independent shots each: the loss is the mean product of the two one-shot residuals, an
+    unbiased estimate of the squared residual (the square of one one-shot residual is not: its expectation carries the
+    extra term a^2 (1/C0^2 - <Z>^2), which pulls the output scale a to zero).  A loss value costs 2 BATCH executions, an
+    SPSA step two loss values.  The test forecasts use exact expectation values in both cases."""
     Xtr, ytr, Xte, m, sd = qcl_data(case); P = 2 * NQ * LAYERS; th = np.concatenate([rng.uniform(-np.pi, np.pi, P), [1.0, 0.0]])
     def loss(t):                                  # <Z> is quadratic in the state: d<Z>/d theta_k = [<Z>(theta + pi/2 e_k) - <Z>(theta - pi/2 e_k)] / 2
         zp = qcl_z(np.vstack([t[:P], t[:P] + np.pi / 2 * np.eye(P), t[:P] - np.pi / 2 * np.eye(P)]), Xtr); z = zp[0]; res = t[P] * z + t[P + 1] - ytr
@@ -204,8 +207,10 @@ def qcl(case, rng, budget=None):
     if budget is None:
         r = minimize(loss, th, jac=True, method="L-BFGS-B", options={"maxiter": 300}); th, ex = r.x, r.nfev * (2 * P + 1) * len(ytr)
     else:
-        K = budget // (2 * BATCH); ex = 2 * BATCH * K
-        def noisy(t): i = rng.integers(0, len(ytr), BATCH); return np.mean((t[P] * est(qcl_z(t[None, :P], Xtr[i])[0], 1, rng) + t[P + 1] - ytr[i])**2)
+        K = budget // (4 * BATCH); ex = 4 * BATCH * K
+        def noisy(t):
+            i = rng.integers(0, len(ytr), BATCH); z = qcl_z(t[None, :P], Xtr[i])[0]; res = lambda: t[P] * est(z, 1, rng) + t[P + 1] - ytr[i]
+            return np.mean(res() * res())
         th = spsa(noisy, th, K, rng)
     return _errors(case, m + sd * (th[P] * qcl_z(th[None, :P], Xte)[0] + th[P + 1])) | {"training MSE": float(loss(th)[0]), "executions": int(ex)}
 
@@ -321,6 +326,8 @@ def run_manifest():
 # ---------------------------------------------------------------- self-checks
 def demo():
     rng = np.random.default_rng(0); n = 3; M = rng.normal(size=(8, 8)) + 1j * rng.normal(size=(8, 8)); c = pauli(M, n)
+    z, a_, b_, y = 0.3, 4.0, -0.2, 0.7; d1, d2 = est(np.full(400_000, z), 1, rng), est(np.full(400_000, z), 1, rng); r1, r2 = a_ * d1 + b_ - y, a_ * d2 + b_ - y
+    assert abs(np.mean(r1 * r2) - (a_ * z + b_ - y)**2) < 0.1 and abs(np.mean(r1**2) - (a_ * z + b_ - y)**2 - a_**2 * (1 / C0**2 - z**2)) < 0.1   # the shot-limited loss of the circuit learning
     mats = [np.eye(2), np.array([[0, 1], [1, 0]]), np.array([[0, -1j], [1j, 0]]), np.diag([1, -1])]
     assert np.allclose(sum(c[i, j, k] * np.kron(np.kron(mats[i], mats[j]), mats[k]) for i in range(4) for j in range(4) for k in range(4)), M)       # Pauli decomposition
     th = rng.uniform(-3, 3, 12); psi = ansatz(shifted(th), 3, True); eps = 1e-6; fd = (ansatz((th + eps * np.eye(12)[5])[None], 3, True)[0] - psi[0]) / eps

@@ -125,13 +125,13 @@
 | lorenz | qrc | 1e+06 | - | 0.064 | 0.28 | 0 |
 | lorenz | qrc | 3e+06 | - | 0.044 | 0.26 | 0 |
 | lorenz | qrc | 1e+07 | - | 0.034 | 0.25 | 0 |
-| lorenz | qcl | 1e+04 | - | 0.79 | 1 | 0 |
-| lorenz | qcl | 3e+04 | - | 0.8 | 1 | 0 |
-| lorenz | qcl | 1e+05 | - | 0.76 | 1 | 0 |
-| lorenz | qcl | 3e+05 | - | 0.62 | 0.84 | 0 |
-| lorenz | qcl | 1e+06 | - | 0.54 | 0.75 | 0 |
-| lorenz | qcl | 3e+06 | - | 0.47 | 0.67 | 0 |
-| lorenz | qcl | 1e+07 | - | 0.44 | 0.63 | 0 |
+| lorenz | qcl | 1e+04 | - | 0.8 | 1 | 0 |
+| lorenz | qcl | 3e+04 | - | 0.69 | 0.9 | 0 |
+| lorenz | qcl | 1e+05 | - | 0.42 | 0.62 | 0 |
+| lorenz | qcl | 3e+05 | - | 0.49 | 0.67 | 0 |
+| lorenz | qcl | 1e+06 | - | 0.3 | 0.46 | 0 |
+| lorenz | qcl | 3e+06 | - | 0.44 | 0.51 | 0 |
+| lorenz | qcl | 1e+07 | - | 0.33 | 0.41 | 0 |
 | lorenz | dqi, sets of 5 | 1e+04 | - | - | 1.4 | - |
 | lorenz | dqi, sets of 15 | 1e+04 | - | - | 0.65 | - |
 | lorenz | dqi, sets of 5 | 3e+04 | - | - | 0.91 | - |
@@ -160,13 +160,13 @@
 | mackey-glass | qrc | 1e+06 | - | 0.083 | 0.29 | 0 |
 | mackey-glass | qrc | 3e+06 | - | 0.055 | 0.25 | 0 |
 | mackey-glass | qrc | 1e+07 | - | 0.045 | 0.24 | 0 |
-| mackey-glass | qcl | 1e+04 | - | 0.7 | 1 | 0 |
-| mackey-glass | qcl | 3e+04 | - | 0.7 | 1 | 0 |
-| mackey-glass | qcl | 1e+05 | - | 0.66 | 0.95 | 0 |
-| mackey-glass | qcl | 3e+05 | - | 0.64 | 0.93 | 0 |
-| mackey-glass | qcl | 1e+06 | - | 0.58 | 0.87 | 0 |
-| mackey-glass | qcl | 3e+06 | - | 0.51 | 0.78 | 0 |
-| mackey-glass | qcl | 1e+07 | - | 0.47 | 0.74 | 0 |
+| mackey-glass | qcl | 1e+04 | - | 0.6 | 0.87 | 0 |
+| mackey-glass | qcl | 3e+04 | - | 0.45 | 0.71 | 0 |
+| mackey-glass | qcl | 1e+05 | - | 0.54 | 0.8 | 0 |
+| mackey-glass | qcl | 3e+05 | - | 0.49 | 0.73 | 0 |
+| mackey-glass | qcl | 1e+06 | - | 0.45 | 0.66 | 0 |
+| mackey-glass | qcl | 3e+06 | - | 0.67 | 0.91 | 0 |
+| mackey-glass | qcl | 1e+07 | - | 0.44 | 0.59 | 0 |
 | mackey-glass | dqi, sets of 5 | 1e+04 | - | - | 1.6 | - |
 | mackey-glass | dqi, sets of 15 | 1e+04 | - | - | 1.1 | - |
 | mackey-glass | dqi, sets of 5 | 3e+04 | - | - | 1.6 | - |
@@ -195,13 +195,13 @@
 | narma2 | qrc | 1e+06 | - | 0.27 | 0.36 | 0 |
 | narma2 | qrc | 3e+06 | - | 0.2 | 0.28 | 0 |
 | narma2 | qrc | 1e+07 | - | 0.16 | 0.24 | 0 |
-| narma2 | qcl | 1e+04 | - | 0.84 | 1 | 0 |
-| narma2 | qcl | 3e+04 | - | 0.85 | 1 | 0 |
-| narma2 | qcl | 1e+05 | - | 0.84 | 1 | 0 |
-| narma2 | qcl | 3e+05 | - | 0.83 | 1 | 0 |
-| narma2 | qcl | 1e+06 | - | 0.83 | 1 | 0 |
-| narma2 | qcl | 3e+06 | - | 0.82 | 0.98 | 0 |
-| narma2 | qcl | 1e+07 | - | 0.74 | 0.9 | 0 |
+| narma2 | qcl | 1e+04 | - | 0.83 | 1 | 0 |
+| narma2 | qcl | 3e+04 | - | 0.84 | 1 | 0 |
+| narma2 | qcl | 1e+05 | - | 0.76 | 0.91 | 0 |
+| narma2 | qcl | 3e+05 | - | 0.77 | 0.94 | 0 |
+| narma2 | qcl | 1e+06 | - | 0.65 | 0.84 | 0 |
+| narma2 | qcl | 3e+06 | - | 0.58 | 0.72 | 0 |
+| narma2 | qcl | 1e+07 | - | 0.52 | 0.59 | 0 |
 | narma2 | dqi, sets of 5 | 1e+04 | - | - | 2.4 | - |
 | narma2 | dqi, sets of 15 | 1e+04 | - | - | 1.9 | - |
 | narma2 | dqi, sets of 5 | 3e+04 | - | - | 1.3 | - |

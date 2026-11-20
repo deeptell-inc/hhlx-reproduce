@@ -1,13 +1,13 @@
 {
- "written": "2026-11-19 17:51:24",
+ "written": "2026-11-19 23:16:39",
  "code": {
   "stage14_system_noise.py": {
-   "sha256": "fc163a89d7942dd03f466634697b7887d31d9962863e01adba363722e11e53a4",
-   "mtime": 1795065873.1162422
+   "sha256": "f1f0f672bbcd844c8d22879a7c05d3444ada4db1398584b9ab6fb40e0f621e8b",
+   "mtime": 1795084006.2514307
   },
   "stage9_sequential_qpe.py": {
    "sha256": "6d799f9d015cdd4aa4027e317d7238ab8b7948b26819f61cc41a1b2ac1e75a26",
-   "mtime": 1795064875.581996
+   "mtime": 1795080523.7914393
   },
   "stage10_power_grid.py": {
    "sha256": "832c1716ee19fccf7c46b14fbe45976e639d8163943e61d0dda06c9b9c29a618",
@@ -20,8 +20,8 @@
  },
  "results": {
   "results/stage14_system.json": {
-   "sha256": "7c13dee5f069462994e06a9f76c7e5e88bbdc72ce224e71ead9a8c2179c3cd4a",
-   "mtime": 1795078284.1449788
+   "sha256": "628672253140e2fc768a756b2aedc4acbf41fbae700024ab2fd075d45d5ad1ab",
+   "mtime": 1795097798.889071
   }
  }
 }

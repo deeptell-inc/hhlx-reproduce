@@ -11,7 +11,9 @@ Systems, each with the protocol and the seeds of its stored runs, without dephas
 so the runs with T_sys = inf repeat stored runs, and on poisson8 the redraw model repeats stage 9; `merge` asserts both.
 Recorded per run: solution infidelity, compliance error, total-variation distance of the learned weights from the true
 ones (each learned value assigned to the nearest eigenvalue), learned values far from every eigenvalue, copies, the
-longest copy, and the numbers of identification and refinement measurements.  Nothing of stages 2-13 is modified; stage 9
+longest copy, the numbers of identification and refinement measurements, and the learned values with their weights and
+label counts (sorted by value).  A jump is applied at the start of a measurement, whose whole evolution then runs with
+the new eigenvalue; the identification count includes the copies of the last batch that the budget cuts off.  Nothing of stages 2-13 is modified; stage 9
 gained the arguments `w_jump` and `count`, with unchanged defaults.  Run from the repository root:
     python stage14_system_noise.py                            # self-check
     python stage14_system_noise.py run case9 depolarising 1e5 # ten runs of one setting -> a part file
@@ -30,6 +32,7 @@ S11 = _load("s11", "stage11_time_series.py")      # the ridge systems (it redire
 SYSTEMS, MODELS, REPS = ("poisson8", "case9", "lorenz"), ("redraw", "depolarising"), 10
 T_SYS = (3e6, 1e6, 3e5, 1e5, 3e4, 1e4)            # finite lifetimes; inf is run once per system (the two models coincide)
 KEYS = ("1-F", "eC", "wTV", "m", "false", "copies", "unlabelled", "T_copy_max", "n_id", "n_ref")
+LISTS = ("mu", "weights", "counts")                # per run: learned values (7 decimals), their weights and label counts
 
 
 def setup(system):
@@ -50,13 +53,14 @@ def run(system, model, T_sys, k0=0, k1=REPS):
     """Repetitions k0..k1-1 of one system, jump model and lifetime."""
     S9, a, b, sid, budget, seed, _ = setup(system); S9.set_noise(np.inf)
     lams, U = np.linalg.eigh(a); w = np.abs(U.conj().T @ b)**2; C0 = S9.truth(a, b, b)[0]
-    w_jump = np.full(len(lams), 1.0 / len(lams)) if model == "depolarising" else None; r = {k: [] for k in KEYS}
+    w_jump = np.full(len(lams), 1.0 / len(lams)) if model == "depolarising" else None; r = {k: [] for k in KEYS + LISTS}
     for k in range(k0, k1):
         n = [0]; mu, wh, st = S9.learn(lams, w, np.inf, budget, np.random.default_rng(seed + k), sid, 1e-3, T_sys=T_sys, w_jump=w_jump, count=n)
         near = np.argmin(np.abs(lams[None, :] - np.asarray(mu)[:, None]), axis=1) if len(mu) else np.empty(0, int)
         val = (1 - S9.S2.fidelity(a, b, mu), abs(np.sum(wh / mu) - C0) / C0, 0.5 * float(np.abs(np.bincount(near, weights=wh, minlength=len(lams)) - w).sum()), len(mu),
                int(sum(np.min(np.abs(lams - c)) > 4 * sid for c in mu)), st["copies"], st["unlabelled"], st["T_copy_max"], n[0], st["n_ref_meas"])
         for key, x in zip(KEYS, val): r[key].append(float(x))
+        o = np.argsort(mu); r["mu"].append([round(float(x), 7) for x in np.asarray(mu)[o]]); r["weights"].append([round(float(x), 8) for x in np.asarray(wh)[o]]); r["counts"].append([int(x) for x in np.asarray(st["counts"])[o]])
     return {"system": system, "model": model, "T_sys": "inf" if not np.isfinite(T_sys) else float(T_sys), "k0": k0, "sig_id": sid, "budget": budget, "N": len(lams), "runs": r}
 
 
@@ -70,8 +74,8 @@ def merge():
         S9, a, b, sid, budget, seed, ref = setup(system); o = out[system] = {"sig_id": sid, "budget": budget, "N": len(a), "weights": sorted(np.abs(np.linalg.eigh(a)[1].conj().T @ b)**2)}
         for model, T in [("redraw", np.inf)] + [(m, t) for m in MODELS for t in T_SYS]:
             parts = sorted((json.load(open(f)) for f in glob.glob(_part(system, model, T, 0)[:-6] + "*.json")), key=lambda p: p["k0"])
-            r = {k: [x for p in parts for x in p["runs"][k]] for k in KEYS}; assert len(r["1-F"]) == REPS and all(p["sig_id"] == sid and p["budget"] == budget for p in parts), (system, model, T)
-            row = {k: float(np.median(v)) for k, v in r.items()} | {"1-F_max": float(np.max(r["1-F"])), "runs": r}
+            r = {k: [x for p in parts for x in p["runs"][k]] for k in KEYS + LISTS}; assert len(r["1-F"]) == REPS and all(p["sig_id"] == sid and p["budget"] == budget for p in parts), (system, model, T)
+            row = {k: float(np.median(r[k])) for k in KEYS} | {"1-F_max": float(np.max(r["1-F"])), "runs": r}
             if np.isfinite(T): o.setdefault(model, {})[f"T_sys={T:g}"] = row
             else: o["T_sys=inf"] = row
         if ref is not None: assert np.allclose(o["T_sys=inf"]["runs"]["1-F"], ref, rtol=0, atol=1e-15), system        # the stored runs of stages 10 and 11

@@ -5,8 +5,8 @@ Code, result files and manuscript source for
 > H. Wakaura and T. Tanimae, "Detection-Limited Eigenvalue Learning for Hybrid Quantum Linear System Solvers"
 > (`paper/main.pdf`).
 
-Every table of the manuscript is written from the result files by a script, and every number quoted in the text is
-checked against them. This repository lets you (1) verify that in under a minute, (2) rebuild the tables, Figs. 2 and 3 and the
+Every table of results in the manuscript is written from the result files by a script (the table that places the methods next
+to prior work is written by hand), and the numbers quoted in the text are checked against the result files. This repository lets you (1) verify that in under a minute, (2) rebuild the tables, Figs. 2 and 3 and the
 PDF from the stored results, and (3) regenerate the results themselves.
 
 ## Requirements
@@ -27,7 +27,7 @@ python -m pytest tests/ -q
 Five tests: three self-checks of the sequential estimator (exact record identity, posterior-identity rule, a two-level
 learning run), the DC power-flow self-check with the time budgets of the stored runs, and `paper/check_numbers.py`.
 The last one asserts the numbers quoted in the text of `paper/main.tex` against `results/` at the quoted number of
-significant figures, checks that no run exceeds its time budget, and verifies the five manifests
+significant figures, checks that no run exceeds its time budget, and verifies the six manifests
 (`results/stage9_manifest.json` to `stage14_manifest.json`): SHA-256 of
 every script and result file, and that every result was written after the code that produced it.
 

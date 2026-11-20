@@ -1,95 +1,95 @@
 {
- "written": "2026-11-17 00:44:54",
+ "written": "2026-11-19 19:55:30",
  "code": {
   "stage12_nisq_baselines.py": {
-   "sha256": "62d44a99df00b6fadf0fd547401f80f1f94c32f8bacaf1589e58c44efc4297fe",
-   "mtime": 1794822305.563643
+   "sha256": "843516fd1d5ffda0396ccca1c10c56bf8a18cb9e0da6a777438f31f8b7726008",
+   "mtime": 1795084006.2508535
   },
   "stage11_time_series.py": {
    "sha256": "0ae52cd9062ca131e552f39cc1b1db02f8fcd8b5f563b74ab0626fcc65e7a981",
-   "mtime": 1794824574.1349075
+   "mtime": 1795063604.549138
   }
  },
  "results": {
   "results/stage12_dqi.lorenz.json": {
    "sha256": "1c2cfce1330c08ae41e69d3eadc1ae2afda8401d4dcb5bb95988fcee22db4911",
-   "mtime": 1794824657.6045196
+   "mtime": 1795084042.726351
   },
   "results/stage12_dqi.mackey-glass.json": {
    "sha256": "04415f0c8129cc35707a54ddd2b2df4fd6f404d711d02b6cb1ab3b17fc0a9a1d",
-   "mtime": 1794824627.3954341
+   "mtime": 1795084042.8541086
   },
   "results/stage12_dqi.narma2.json": {
    "sha256": "b22efc0a0bb0048ba54bc2e0563e83ce91809b6bb7044a65da8a96a26503b1e6",
-   "mtime": 1794824684.6027005
+   "mtime": 1795084042.9272633
   },
   "results/stage12_qcl.lorenz.json": {
-   "sha256": "c4e7ffada01916b2d96e3d65c5fd19745be3f40141001a69d45afafbcf45118a",
-   "mtime": 1794827497.9261389
+   "sha256": "0360faa61a217a8703a1a149716dfd3d0c9934d54c25d7654d736e8c4f54ed02",
+   "mtime": 1795085712.5575702
   },
   "results/stage12_qcl.mackey-glass.json": {
-   "sha256": "88c436247e2dd002d67c6c672fc7c858545527908d01fb79eb439b04000b9cad",
-   "mtime": 1794827569.515601
+   "sha256": "3385df994dda7aa43591b4265c1322f09e92c8d53e201a53abd65df4f763ef64",
+   "mtime": 1795085729.638055
   },
   "results/stage12_qcl.narma2.json": {
-   "sha256": "d801b3dde9b6e8684c75343b3bf5cc0ca357492f8530628b577a0ab9fa312978",
-   "mtime": 1794825668.9746401
+   "sha256": "58defd6848cfe4df49f8f4339288bb4865d6dc6bd00b4ea554af327ba88643d6",
+   "mtime": 1795084611.7646937
   },
   "results/stage12_qrc.lorenz.json": {
    "sha256": "afbd16a6c5cf7bc44c19e9d290ca30fc640b791feb1d84846c96fedc72cbb1fa",
-   "mtime": 1794824592.0494611
+   "mtime": 1795084026.129283
   },
   "results/stage12_qrc.mackey-glass.json": {
    "sha256": "67dd093b947de32b468b387dfcd8851032915a34caaa8471e8f031e646724e13",
-   "mtime": 1794824592.0627162
+   "mtime": 1795084026.153631
   },
   "results/stage12_qrc.narma2.json": {
    "sha256": "42ef9366642f2dcb892d88103fa002e49fa0f2e5d8aad22f4fe53677f76caf65",
-   "mtime": 1794824590.4355662
+   "mtime": 1795084025.6745582
   },
   "results/stage12_vqls.P3_Poisson_N=4.json": {
    "sha256": "86c7fcdb6d8d327b42a50d554637006caa38fd6d974b1c181c802a122d6ee6c2",
-   "mtime": 1794824599.7838852
+   "mtime": 1795084029.0446656
   },
   "results/stage12_vqls.P3_Poisson_N=8.json": {
    "sha256": "53b1c1c788f93e67a458f513399c9f78f22011a555e4a1beab764c76a612b0c5",
-   "mtime": 1794824600.3601103
+   "mtime": 1795084029.2469385
   },
   "results/stage12_vqls.P4_Toeplitz_N=8.json": {
    "sha256": "ef14c7a29e9320b202edb0c517855dfbcd443b82fcd1021d4ff839979653ca93",
-   "mtime": 1794824605.9007006
+   "mtime": 1795084030.8907146
   },
   "results/stage12_vqls.P5_random_4x4.json": {
    "sha256": "08c1180a1cb5fc481bf1d5db9d73df40ad784373db5e9d6e5c5ddddb5247879c",
-   "mtime": 1794824597.8118472
+   "mtime": 1795084028.205529
   },
   "results/stage12_vqls.case118.json": {
    "sha256": "6011c0d99d942dd78a259c006d5fc4f8c35b4e05279830b87b4ba510ade5f51a",
-   "mtime": 1794825869.6858954
+   "mtime": 1795084541.6795952
   },
   "results/stage12_vqls.case14.json": {
    "sha256": "e92011bbfa038d5df391775f2d96dc9aa0b4bda746f539be6a3bf4a3081eaac3",
-   "mtime": 1794824609.410086
+   "mtime": 1795084033.875053
   },
   "results/stage12_vqls.case30.json": {
    "sha256": "f809635578cc499c71d7d9c697d4d43dddca5a3d4866df933b67d3de3ee29d62",
-   "mtime": 1794824706.7675378
+   "mtime": 1795084057.0055363
   },
   "results/stage12_vqls.case9.json": {
    "sha256": "02c05531df35bdbc9fe88c4b59d90e2105632b7fd99be0b4bd41530a5798c917",
-   "mtime": 1794824605.9986486
+   "mtime": 1795084031.5822902
   },
   "results/stage12_vqls.lorenz.json": {
    "sha256": "34faa4c3d29496f1201ba2a761b084f5452dc59fded9d52f3080904637b94f59",
-   "mtime": 1794824597.5609505
+   "mtime": 1795084030.0281472
   },
   "results/stage12_vqls.mackey-glass.json": {
    "sha256": "71f4b0cfc23f2ddb4f36a32fdb4e22c0325cdb06ea2c560863f97ba1facd7e25",
-   "mtime": 1794824597.7023451
+   "mtime": 1795084030.2499342
   },
   "results/stage12_vqls.narma2.json": {
    "sha256": "acb22eba1f43d663c3c17fea380feb69269e4777cc5d613410861a03752ae446",
-   "mtime": 1794824598.7931523
+   "mtime": 1795084031.02718
   }
  }
 }

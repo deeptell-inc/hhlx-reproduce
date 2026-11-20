@@ -36,8 +36,8 @@ Forecasts: median over ten runs; `difference` is the mean squared difference fro
 | narma2 | QRC | 10000 executions | - | - | not runnable | - |
 | narma2 | QRC | 100000 executions | 9.6e+04 | - | 0.64 | 0.52 |
 | narma2 | QCL | exact expectation values | 9.3e+06 | - | 0.14 | 0.2 |
-| narma2 | QCL | 10000 executions | 1e+04 | - | 1 | 0.84 |
-| narma2 | QCL | 100000 executions | 1e+05 | - | 1 | 0.84 |
+| narma2 | QCL | 10000 executions | 1e+04 | - | 1 | 0.83 |
+| narma2 | QCL | 100000 executions | 1e+05 | - | 0.91 | 0.76 |
 | narma2 | DQI, sets of 5 | expectation of one sample (satisfied 0.30, random 0.16, optimum 0.63) | 1 | - | 4 | - |
 | narma2 | DQI, sets of 5 | best of the samples (satisfied 0.57) | 1e+04 | - | 2.4 | - |
 | narma2 | DQI, sets of 5 | best of the samples (satisfied 0.63) | 1e+05 | - | 1.2 | - |
@@ -66,8 +66,8 @@ Forecasts: median over ten runs; `difference` is the mean squared difference fro
 | mackey-glass | QRC | 10000 executions | - | - | not runnable | - |
 | mackey-glass | QRC | 100000 executions | 9.6e+04 | - | 0.56 | 0.31 |
 | mackey-glass | QCL | exact expectation values | 3.3e+07 | - | 0.097 | 0.13 |
-| mackey-glass | QCL | 10000 executions | 1e+04 | - | 1 | 0.7 |
-| mackey-glass | QCL | 100000 executions | 1e+05 | - | 0.95 | 0.66 |
+| mackey-glass | QCL | 10000 executions | 1e+04 | - | 0.87 | 0.6 |
+| mackey-glass | QCL | 100000 executions | 1e+05 | - | 0.8 | 0.54 |
 | mackey-glass | DQI, sets of 5 | expectation of one sample (satisfied 0.30, random 0.16, optimum 0.63) | 1 | - | 2.1 | - |
 | mackey-glass | DQI, sets of 5 | best of the samples (satisfied 0.57) | 1e+04 | - | 1.6 | - |
 | mackey-glass | DQI, sets of 5 | best of the samples (satisfied 0.63) | 1e+05 | - | 1.6 | - |
@@ -96,8 +96,8 @@ Forecasts: median over ten runs; `difference` is the mean squared difference fro
 | lorenz | QRC | 10000 executions | - | - | not runnable | - |
 | lorenz | QRC | 100000 executions | 9.6e+04 | - | 0.43 | 0.2 |
 | lorenz | QCL | exact expectation values | 3.3e+07 | - | 0.0084 | 0.13 |
-| lorenz | QCL | 10000 executions | 1e+04 | - | 1 | 0.79 |
-| lorenz | QCL | 100000 executions | 1e+05 | - | 1 | 0.76 |
+| lorenz | QCL | 10000 executions | 1e+04 | - | 1 | 0.8 |
+| lorenz | QCL | 100000 executions | 1e+05 | - | 0.62 | 0.42 |
 | lorenz | DQI, sets of 5 | expectation of one sample (satisfied 0.30, random 0.16, optimum 0.63) | 1 | - | 2.4 | - |
 | lorenz | DQI, sets of 5 | best of the samples (satisfied 0.57) | 1e+04 | - | 1.4 | - |
 | lorenz | DQI, sets of 5 | best of the samples (satisfied 0.63) | 1e+05 | - | 0.84 | - |
